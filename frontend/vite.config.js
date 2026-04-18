@@ -6,7 +6,26 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(),
+     prerender({
+      routes: [
+        '/',
+        '/services',
+        '/devices',
+        '/about',
+        '/contact',
+        '/blog',
+        '/accessories',
+        '/book',
+        // Add your key dynamic SEO pages:
+        '/iphone-15-pro-screen-repair-adelaide',
+        '/iphone-14-screen-repair-adelaide',
+        '/iphone-14-battery-replacement-adelaide',
+        '/samsung-s24-screen-repair-adelaide',
+        '/ipad-pro-screen-repair-adelaide',
+      ],
+    }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

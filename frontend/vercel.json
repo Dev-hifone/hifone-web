@@ -1,5 +1,16 @@
 {
   "outputDirectory": "build",
+  "redirects": [
+    { "source": "/services/iphone-repairs",           "destination": "/devices/iphone",                          "permanent": true },
+    { "source": "/services/android-phone-repairs",    "destination": "/devices/samsung",                         "permanent": true },
+    { "source": "/services/samsung-repairs",          "destination": "/devices/samsung",                         "permanent": true },
+    { "source": "/services/samsung-screen-repairs",   "destination": "/samsung-s24-screen-repair-adelaide",      "permanent": true },
+    { "source": "/services/iphone-screen-repairs",    "destination": "/iphone-14-screen-repair-adelaide",        "permanent": true },
+    { "source": "/services/iphone-battery-replacement","destination": "/iphone-14-battery-replacement-adelaide", "permanent": true },
+    { "source": "/services/iphone-charging-port-repairs","destination": "/iphone-14-charging-port-repair-adelaide","permanent": true },
+    { "source": "/services/iphone-water-damage-repairs","destination": "/iphone-14-water-damage-repair-adelaide","permanent": true },
+    { "source": "/phone-repairs/north-adelaide",      "destination": "/services",                                "permanent": true }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
