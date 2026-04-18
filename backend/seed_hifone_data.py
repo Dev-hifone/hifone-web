@@ -4,14 +4,14 @@ Scraped from hifone.com.au — run this once to populate your MongoDB.
 
 Usage:
   pip install requests
-  python seed_hifone_data.py --url https://hifhone-demo.onrender.com
+  python seed_hifone_data.py --url https://hifone-web.onrender.com
 """
 
 import requests
 import sys
 import json
 
-BASE_URL = sys.argv[2] if len(sys.argv) > 2 else "https://hifhone-demo.onrender.com"
+BASE_URL = sys.argv[2] if len(sys.argv) > 2 else "https://hifone-web.onrender.com"
 API = f"{BASE_URL}/api"
 
 def post(endpoint, data):
