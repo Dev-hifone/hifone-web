@@ -1,0 +1,129 @@
+/* HiFone DatePicker — Clean Dropdown Style */
+
+.hifone-datepicker-wrap {
+  width: 100%;
+}
+
+/* Main calendar box */
+.hifone-calendar {
+  width: 100% !important;
+  border: none !important;
+  border-radius: 20px !important;
+  background: #ffffff !important;
+  padding: 20px !important;
+  font-family: inherit !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12) !important;
+  border: 1.5px solid #F0F0F0 !important;
+}
+
+/* Header row */
+.hifone-calendar .react-datepicker__header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #F5F5F5 !important;
+  border-radius: 0 !important;
+  padding: 0 0 14px 0 !important;
+}
+
+/* Month/Year title */
+.hifone-calendar .react-datepicker__current-month {
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  color: #111111 !important;
+  letter-spacing: -0.3px !important;
+}
+
+/* Nav prev/next */
+.hifone-calendar .react-datepicker__navigation {
+  top: 0px !important;
+}
+.hifone-calendar .react-datepicker__navigation-icon::before {
+  border-color: #E31E24 !important;
+  border-width: 2.5px 2.5px 0 0 !important;
+  width: 9px !important;
+  height: 9px !important;
+}
+.hifone-calendar .react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
+  border-color: #C01017 !important;
+}
+
+/* Day headers Su Mo Tu... */
+.hifone-calendar .react-datepicker__day-names {
+  margin-top: 10px !important;
+}
+.hifone-calendar .react-datepicker__day-name {
+  color: #BBBBBB !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  width: 40px !important;
+  line-height: 32px !important;
+  margin: 1px !important;
+}
+
+/* Individual days */
+.hifone-calendar .react-datepicker__day {
+  width: 40px !important;
+  line-height: 40px !important;
+  margin: 1px !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #222222 !important;
+  transition: background 0.12s, color 0.12s !important;
+}
+
+/* Hover */
+.hifone-calendar .react-datepicker__day:hover:not(.react-datepicker__day--disabled):not(.react-datepicker__day--selected) {
+  background: rgba(227,30,36,0.08) !important;
+  color: #E31E24 !important;
+  border-radius: 12px !important;
+}
+
+/* Selected day */
+.hifone-calendar .react-datepicker__day--selected,
+.hifone-calendar .react-datepicker__day--keyboard-selected {
+  background: #E31E24 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 14px rgba(227,30,36,0.40) !important;
+}
+.hifone-calendar .react-datepicker__day--selected:hover {
+  background: #C01017 !important;
+}
+
+/* Today (not selected) */
+.hifone-calendar .react-datepicker__day--today:not(.react-datepicker__day--selected) {
+  background: rgba(227,30,36,0.08) !important;
+  color: #E31E24 !important;
+  font-weight: 700 !important;
+}
+
+/* Disabled (past + Sunday) */
+.hifone-calendar .react-datepicker__day--disabled {
+  color: #DDDDDD !important;
+  cursor: not-allowed !important;
+  background: transparent !important;
+}
+
+/* Outside month days */
+.hifone-calendar .react-datepicker__day--outside-month {
+  color: #E0E0E0 !important;
+}
+
+.hifone-calendar .react-datepicker__month { margin: 0 !important; }
+.react-datepicker__triangle { display: none !important; }
+
+/* Mobile — make cells fill width */
+@media (max-width: 420px) {
+  .hifone-calendar {
+    padding: 14px !important;
+  }
+  .hifone-calendar .react-datepicker__day,
+  .hifone-calendar .react-datepicker__day-name {
+    width: calc((100vw - 100px) / 7) !important;
+    line-height: calc((100vw - 100px) / 7) !important;
+    font-size: 13px !important;
+    margin: 1px !important;
+  }
+}

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /booking/success
+
+Sitemap: https://hifone.com.au/sitemap.xml
