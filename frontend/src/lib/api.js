@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// const BACKEND_URL = "https://hifhone-demo.onrender.com";
-// const API_BASE = `${BACKEND_URL}/api`;
-const BACKEND_URL = '';  // empty - proxy handle karega
-const API_BASE = `/api`;
+const BACKEND_URL = "https://hifone-web.onrender.com";
+const API_BASE = `${BACKEND_URL}/api`;
+// const BACKEND_URL = '';  // empty - proxy handle karega
+// const API_BASE = `/api`;
 // Create axios instance with default config
 const api = axios.create({
   baseURL: API_BASE,
