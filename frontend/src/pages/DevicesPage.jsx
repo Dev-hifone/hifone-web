@@ -3,12 +3,11 @@ import { useParams, useSearchParams, Link, useNavigate } from 'react-router-dom'
 import { ArrowRight, ArrowLeft, Smartphone, Tablet, Laptop, Watch, ChevronRight } from 'lucide-react';
 import { deviceApi, serviceApi } from '../lib/api';
 import { SEO } from '../components/SEO';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useBrandsData } from '../hooks/useBrandsData';
 
 const WHATSAPP = 'https://wa.me/61432977092';
 
-// Category config — UI only, data comes from MongoDB
 const CATEGORY_CONFIG = {
   phones: {
     title: 'iPhones / Android Phones',
@@ -44,36 +43,48 @@ const CATEGORY_CONFIG = {
   },
 };
 
-// Brand page — model select → service select → /book
+// Generic brand page for any brand
 function BrandPage({ brand, fromCategory }) {
   const navigate = useNavigate();
+  const { brands: allBrands } = useBrandsData();
   const [devices, setDevices] = useState([]);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDevice, setSelectedDevice] = useState(null);
 
-  const brandMap = { apple: 'Apple', samsung: 'Samsung', ipad: 'iPad', google: 'Google' };
-  const actualBrand = brandMap[brand?.toLowerCase()];
+  // Map routeKey → actual brand name in DB
+  const ROUTE_TO_BRAND = {
+    apple: 'Apple', samsung: 'Samsung', ipad: 'iPad', google: 'Google',
+    huawei: 'Huawei', oppo: 'Oppo', motorola: 'Motorola', xiaomi: 'Xiaomi',
+    oneplus: 'OnePlus', vivo: 'Vivo', nokia: 'Nokia', nothing: 'Nothing',
+    sony: 'Sony', macbook: 'MacBook', dell: 'Dell', hp: 'HP',
+    lenovo: 'Lenovo', asus: 'Asus',
+    applewatch: 'Apple Watch', samsungwatch: 'Samsung Watch',
+    fitbit: 'Fitbit', garmin: 'Garmin',
+  };
+
+  const actualBrand = ROUTE_TO_BRAND[brand?.toLowerCase()] || brand;
+  const brandUI = allBrands.find(b => b.brand === actualBrand);
   const backHref = fromCategory ? `/devices?category=${fromCategory}` : '/devices';
+  const catConfig = fromCategory ? CATEGORY_CONFIG[fromCategory] : CATEGORY_CONFIG.phones;
 
   useEffect(() => {
     Promise.all([
-      actualBrand ? deviceApi.getByBrand(actualBrand) : Promise.resolve({ data: [] }),
+      deviceApi.getByBrand(actualBrand),
       serviceApi.getAll(),
     ]).then(([devRes, svcRes]) => {
       setDevices(devRes.data || []);
       setServices(svcRes.data || []);
-    }).catch(() => { }).finally(() => setLoading(false));
+    }).catch(() => {}).finally(() => setLoading(false));
   }, [brand]);
-
-  const catConfig = fromCategory ? CATEGORY_CONFIG[fromCategory] : CATEGORY_CONFIG.phones;
 
   return (
     <div data-testid={`devices-${brand}-page`}>
-      <SEO title={`${actualBrand || brand} Repair Adelaide | HiFone`}
+      <SEO title={`${actualBrand} Repair Adelaide | HiFone`}
         description={`${actualBrand} repair in Kurralta Park. Screen, battery, water damage and more. Same-day service.`} />
 
       <section className="relative py-14 bg-[#111111] overflow-hidden">
+        {brandUI?.image && <img src={brandUI.image} alt="" className="absolute inset-0 w-full h-full object-cover opacity-10" />}
         <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-white/40 mb-6 flex-wrap">
             <Link to="/devices" className="hover:text-white transition-colors">All Devices</Link>
@@ -118,7 +129,7 @@ function BrandPage({ brand, fromCategory }) {
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                   {[...Array(8)].map((_, i) => <div key={i} className="h-20 bg-[#F8F8F8] rounded-xl animate-pulse" />)}
                 </div>
-              ) : (
+              ) : devices.length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                   {devices.map(device => (
                     <button key={device.id} onClick={() => setSelectedDevice(device)}
@@ -128,8 +139,18 @@ function BrandPage({ brand, fromCategory }) {
                     </button>
                   ))}
                 </div>
+              ) : (
+                <div className="text-center py-12 bg-[#F8F8F8] rounded-2xl">
+                  <p className="text-5xl mb-4">📱</p>
+                  <p className="font-bold text-[#111] text-lg mb-2">Models coming soon!</p>
+                  <p className="text-[#555] text-sm mb-4">WhatsApp us with your model for an instant quote.</p>
+                  <a href={WHATSAPP} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full px-6 py-2.5 text-sm font-bold transition-colors">
+                    WhatsApp for a Quote
+                  </a>
+                </div>
               )}
-              <div className="mt-8 p-5 bg-[#F8F8F8] rounded-2xl text-center">
+              <div className="mt-6 p-5 bg-[#F8F8F8] rounded-2xl text-center">
                 <p className="text-[#555] text-sm mb-3">Don't see your model? We repair many more.</p>
                 <a href={WHATSAPP} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full px-5 py-2.5 text-sm font-bold transition-colors">
@@ -183,13 +204,12 @@ function BrandPage({ brand, fromCategory }) {
   );
 }
 
-// Category page — /devices?category=phones|tablets|laptops|watches
+// Category page
 function CategoryPage({ category }) {
   const { brands } = useBrandsData();
   const cat = CATEGORY_CONFIG[category];
   if (!cat) return <MainPage />;
 
-  // Filter brands for this category
   const catBrands = brands.filter(b => b.category === category);
 
   return (
@@ -211,7 +231,6 @@ function CategoryPage({ category }) {
 
       <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          {/* Step bar */}
           <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-1">
             {[
               { n: 1, label: 'Device Type', done: true },
@@ -241,40 +260,24 @@ function CategoryPage({ category }) {
               {catBrands.map((brand, i) => (
                 <motion.div key={brand.brand}
                   initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
-                  {brand.routeKey ? (
-                    <Link to={`/devices/${brand.routeKey}?from=${category}`}
-                      className="group block bg-[#F8F8F8] border-2 border-transparent hover:border-[#E31E24] rounded-2xl overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg">
-                      <div className="relative h-36 overflow-hidden">
-                        <img src={brand.image} alt={brand.brand} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                        <div className="absolute top-0 left-0 right-0 h-1" style={{ backgroundColor: cat.accentColor }} />
-                        <p className="absolute bottom-3 left-4 font-display font-bold text-white text-lg">{brand.brand}</p>
-                      </div>
-                      <div className="p-4 flex items-center justify-between">
-                        <span className="text-sm text-[#555] font-medium">{brand.count} models available</span>
-                        <ArrowRight className="w-4 h-4 text-[#E31E24] group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </Link>
-                  ) : (
-                    <a href={WHATSAPP} target="_blank" rel="noopener noreferrer"
-                      className="group block bg-[#F8F8F8] border-2 border-transparent hover:border-[#25D366] rounded-2xl overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg">
-                      <div className="relative h-36 overflow-hidden">
-                        <img src={brand.image} alt={brand.brand} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                        <p className="absolute bottom-3 left-4 font-display font-bold text-white text-lg">{brand.brand}</p>
-                      </div>
-                      <div className="p-4 flex items-center justify-between">
-                        <span className="text-sm text-[#555] font-medium">WhatsApp for Quote</span>
-                        <ArrowRight className="w-4 h-4 text-[#25D366] group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </a>
-                  )}
+                  viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
+                  <Link to={`/devices/${brand.routeKey}?from=${category}`}
+                    className="group block bg-[#F8F8F8] border-2 border-transparent hover:border-[#E31E24] rounded-2xl overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg">
+                    <div className="relative h-36 overflow-hidden">
+                      <img src={brand.image} alt={brand.brand} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                      <div className="absolute top-0 left-0 right-0 h-1" style={{ backgroundColor: cat.accentColor }} />
+                      <p className="absolute bottom-3 left-4 font-display font-bold text-white text-lg">{brand.brand}</p>
+                    </div>
+                    <div className="p-4 flex items-center justify-between">
+                      <span className="text-sm text-[#555] font-medium">{brand.count} models available</span>
+                      <ArrowRight className="w-4 h-4 text-[#E31E24] group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
                 </motion.div>
               ))}
             </div>
           ) : (
-            // No brands in DB for this category — show WhatsApp CTA
             <div className="text-center py-16">
               <div className="text-6xl mb-4">{category === 'laptops' ? '💻' : '⌚'}</div>
               <h3 className="font-display font-bold text-[#111] text-2xl mb-3">{cat.title}</h3>
@@ -291,7 +294,7 @@ function CategoryPage({ category }) {
   );
 }
 
-// Main /devices page
+// Main /devices
 function MainPage() {
   const { brands } = useBrandsData();
 
@@ -334,9 +337,14 @@ function MainPage() {
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="flex flex-wrap gap-1">
-                        {brands.filter(b => b.category === key).map(b => (
+                        {brands.filter(b => b.category === key).slice(0, 4).map(b => (
                           <span key={b.brand} className="text-xs px-2 py-0.5 rounded-full bg-white border border-gray-200 text-[#555]">{b.brand}</span>
                         ))}
+                        {brands.filter(b => b.category === key).length > 4 && (
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-white border border-gray-200 text-[#999]">
+                            +{brands.filter(b => b.category === key).length - 4} more
+                          </span>
+                        )}
                       </div>
                       <span className="text-xs font-bold flex items-center gap-1 shrink-0 ml-2" style={{ color: cat.accentColor }}>
                         Select Brand <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
@@ -353,7 +361,6 @@ function MainPage() {
   );
 }
 
-// Router
 export default function DevicesPage() {
   const { brand } = useParams();
   const [searchParams] = useSearchParams();
