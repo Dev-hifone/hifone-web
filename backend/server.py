@@ -5,6 +5,7 @@ from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
+import re   
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional, Dict, Any
@@ -414,6 +415,32 @@ async def get_brands_grouped():
 @api_router.get("/devices/brand/{brand}", response_model=List[DeviceModel])
 async def get_devices_by_brand(brand: str):
     devices = await db.devices.find({"brand": brand, "is_active": True}, {"_id": 0}).to_list(1000)
+    def sort_key(d):
+        name = d.get("name", "")
+        # Samsung A-series alag treat karo — S-series se pehle aaye
+        if "Galaxy A" in name:
+            nums = re.findall(r'\d+', name)
+            num = int(nums[0]) if nums else 0
+            return (1, -num, 0)   # group 1 = A-series
+        if "Galaxy Z" in name:
+            nums = re.findall(r'\d+', name)
+            num = int(nums[0]) if nums else 0
+            sub = 1 if "Fold" in name else 0
+            return (2, -num, -sub)  # group 2 = Z-series
+        # iPad — Pro > Air > Mini > standard
+        if "iPad" in name:
+            sub = 3 if "Pro" in name else 2 if "Air" in name else 1 if "Mini" in name else 0
+            nums = re.findall(r'\d+', name)
+            num = int(nums[0]) if nums else 0
+            return (0, -num, -sub)
+        # iPhone / Samsung S-series / Pixel — number based
+        nums = re.findall(r'\d+', name)
+        num = int(nums[0]) if nums else 0
+        sub = 3 if "Pro Max" in name or "Ultra" in name else \
+              2 if "Pro" in name or "Plus" in name else \
+              1 if "Max" in name or "FE" in name else 0
+        return (0, -num, -sub)
+    devices.sort(key=sort_key)
     return devices
 
 @api_router.get("/devices/{device_id}", response_model=DeviceModel)
@@ -444,8 +471,9 @@ async def update_device(device_id: str, device: DeviceCreate, admin=Depends(get_
 @api_router.get("/services", response_model=List[ServiceModel])
 async def get_services():
     services = await db.services.find({"is_active": True}, {"_id": 0}).to_list(1000)
+    order = {"svc-screen": 0, "svc-battery": 1, "svc-charging": 2}
+    services.sort(key=lambda s: order.get(s.get("id", ""), 99))
     return services
-
 @api_router.get("/services/{service_id}", response_model=ServiceModel)
 async def get_service(service_id: str):
     service = await db.services.find_one({"id": service_id}, {"_id": 0})

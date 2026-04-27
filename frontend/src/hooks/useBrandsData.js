@@ -1,33 +1,15 @@
 import { useState, useEffect } from 'react';
 import { deviceApi } from '../lib/api';
 
-// Brand display config — images + category mapping
-// These are UI config only (images/colors), not data
 const BRAND_UI = {
-  Apple:   {
-    image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400&q=80',
-    category: 'phones',
-    routeKey: 'apple',
-    accentColor: '#E31E24',
-  },
-  Samsung: {
-    image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&q=80',
-    category: 'phones',
-    routeKey: 'samsung',
-    accentColor: '#1428A0',
-  },
-  iPad:    {
-    image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&q=80',
-    category: 'tablets',
-    routeKey: 'ipad',
-    accentColor: '#8B5CF6',
-  },
-  Google:  {
-    image: 'https://images.unsplash.com/photo-1598327106026-d9521da673d1?w=400&q=80',
-    category: 'phones',
-    routeKey: 'google',
-    accentColor: '#34A853',
-  },
+  Apple: { image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400&q=80', category: 'phones', routeKey: 'apple', accentColor: '#E31E24' },
+  Samsung: { image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&q=80', category: 'phones', routeKey: 'samsung', accentColor: '#1428A0' },
+  iPad: { image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&q=80', category: 'tablets', routeKey: 'ipad', accentColor: '#8B5CF6' },
+  Google: { image: 'https://images.unsplash.com/photo-1598327106026-d9521da673d1?w=400&q=80', category: 'phones', routeKey: 'google', accentColor: '#34A853' },
+  // Laptop brands
+  Apple_laptop: { image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&q=80', category: 'laptops', routeKey: null, accentColor: '#FF6B00' },
+  // Watch brands  
+  Apple_watch: { image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400&q=80', category: 'watches', routeKey: null, accentColor: '#10B981' },
 };
 
 const DEFAULT_UI = {
@@ -37,10 +19,9 @@ const DEFAULT_UI = {
   accentColor: '#E31E24',
 };
 
-// Cache so all components share one fetch
 let cache = null;
 let cacheTime = 0;
-const CACHE_TTL = 5 * 60 * 1000; // 5 min
+const CACHE_TTL = 5 * 60 * 1000;
 
 export function useBrandsData() {
   const [brands, setBrands] = useState(cache || []);
@@ -62,7 +43,7 @@ export function useBrandsData() {
         cacheTime = Date.now();
         setBrands(enriched);
       })
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   }, []);
 
