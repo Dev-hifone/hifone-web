@@ -21,53 +21,65 @@ const SERVICES_LIST = [
 ];
 
 // ── Repair Mega Menu ──────────────────────────────────────────────────────────
+const CATEGORY_LABELS = {
+  phones:  '📱 Phones',
+  tablets: '📋 Tablets',
+  laptops: '💻 Laptops',
+  watches: '⌚ Watches',
+};
+
 const RepairMega = ({ brands, onClose }) => {
   const navigate = useNavigate();
+
+  // Group brands by category
+  const grouped = brands.reduce((acc, b) => {
+    const cat = b.category || 'phones';
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(b);
+    return acc;
+  }, {});
+
+  const categoryOrder = ['phones', 'tablets', 'laptops', 'watches'];
+  const activeGroups = categoryOrder.filter(c => grouped[c]?.length > 0);
+
   return (
-    <div className="bg-white border-t-2 border-[#E31E24] shadow-2xl">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-6">
-        <div className="flex gap-8">
-          {/* Brand columns */}
-          <div className="flex-1 grid gap-6" style={{ gridTemplateColumns: `repeat(${Math.min(brands.length, 4)}, 1fr)` }}>
-            {brands.map((b) => (
-              <div key={b.brand}>
-                {/* Brand header */}
+    <div className="bg-white border-t-2 border-[#E31E24] shadow-2xl max-h-[80vh] overflow-y-auto">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-5">
+        <div className="flex gap-6">
+          {/* Left: grouped columns */}
+          <div className="flex-1 grid grid-cols-4 gap-5">
+            {activeGroups.map(cat => (
+              <div key={cat}>
+                {/* Category header */}
                 <button
-                  onClick={() => { navigate(b.routeKey ? `/devices/${b.routeKey}` : `/devices?category=${b.category}`); onClose(); }}
-                  className="flex items-center gap-2 mb-3 group w-full text-left"
+                  onClick={() => { navigate(`/devices?category=${cat}`); onClose(); }}
+                  className="flex items-center gap-1.5 mb-3 group w-full text-left"
                 >
-                  <div className="w-1 h-4 rounded-full bg-[#E31E24]" />
-                  <span className="font-bold text-sm text-[#111111] group-hover:text-[#E31E24] transition-colors uppercase tracking-wide">
-                    {b.brand}
+                  <div className="w-1 h-3.5 rounded-full bg-[#E31E24]" />
+                  <span className="font-black text-xs text-[#111] group-hover:text-[#E31E24] uppercase tracking-wider transition-colors">
+                    {CATEGORY_LABELS[cat]}
                   </span>
-                  <span className="text-xs text-[#999] ml-auto">{b.count} models</span>
                 </button>
-                {/* Device list */}
-                <div className="space-y-0.5 max-h-48 overflow-y-auto">
-                  {b.devices.slice(0, 8).map((d) => (
-                    <button key={d.id}
-                      onClick={() => {
-                        navigate('/book', { state: { device: { ...d, brand: b.brand } } });
-                        onClose();
-                      }}
-                      className="block w-full text-left px-2 py-1.5 text-sm text-[#555] hover:text-[#E31E24] hover:bg-red-50 rounded-lg transition-all">
-                      {d.name}
-                    </button>
-                  ))}
-                  {b.devices.length > 8 && (
+                {/* Brands under this category */}
+                {grouped[cat].map(b => (
+                  <div key={b.brand} className="mb-3">
                     <button
-                      onClick={() => { navigate(b.routeKey ? `/devices/${b.routeKey}` : `/devices?category=${b.category}`); onClose(); }}
-                      className="block w-full text-left px-2 py-1.5 text-xs text-[#E31E24] font-bold hover:underline">
-                      +{b.devices.length - 8} more models →
+                      onClick={() => { navigate(b.routeKey ? `/devices/${b.routeKey}` : `/devices?category=${cat}`); onClose(); }}
+                      className="flex items-center gap-1.5 w-full text-left px-2 py-1 hover:bg-red-50 rounded-lg group mb-0.5"
+                    >
+                      <span className="font-semibold text-sm text-[#333] group-hover:text-[#E31E24] transition-colors">
+                        {b.brand}
+                      </span>
+                      <span className="text-[10px] text-[#BBB] ml-auto">{b.count}</span>
                     </button>
-                  )}
-                </div>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
 
           {/* Right CTA panel */}
-          <div className="w-56 shrink-0 flex flex-col gap-3">
+          <div className="w-48 shrink-0 flex flex-col gap-3">
             <div className="bg-[#111111] rounded-2xl p-4 text-center">
               <p className="text-white font-bold text-sm mb-1">Not sure?</p>
               <p className="text-white/60 text-xs mb-3">We'll diagnose your device for free</p>
@@ -92,7 +104,6 @@ const RepairMega = ({ brands, onClose }) => {
     </div>
   );
 };
-
 // ── Services Mega Menu ────────────────────────────────────────────────────────
 const ServicesMega = ({ onClose }) => (
   <div className="bg-white border-t-2 border-[#E31E24] shadow-2xl">
