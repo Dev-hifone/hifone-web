@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import LOGO_URL from "../../assets/Logo/hifone_logo.png"
+import { useEffect, useState } from 'react';
+import { settingsApi } from '../../lib/api';
 
 const WHATSAPP = 'https://wa.me/61432977092';
 
@@ -28,6 +30,16 @@ const footerLinks = {
 };
 
 export const Footer = () => {
+  const [hours, setHours] = useState({ weekday: 'Mon–Sat: 9am–6pm', weekend: 'Sun: Closed' });
+
+useEffect(() => {
+  settingsApi.get().then(res => {
+    if (res.data?.hours_weekday) setHours({
+      weekday: res.data.hours_weekday,
+      weekend: res.data.hours_weekend || '',
+    });
+  }).catch(() => {});
+}, []);
   const year = new Date().getFullYear();
   return (
     <footer className="bg-[#111111] text-white" data-testid="footer">
@@ -54,8 +66,11 @@ export const Footer = () => {
                 <MapPin className="w-4 h-4 text-[#E31E24] shrink-0" />Shop 153 Anzac Hwy, Kurralta Park SA 5037
               </div>
               <div className="flex items-center gap-3 text-sm text-white/50">
-                <Clock className="w-4 h-4 text-[#E31E24] shrink-0" />Mon–Sat: 9am–6pm
-              </div>
+<Clock className="w-4 h-4 text-[#E31E24] shrink-0" />
+<span>
+  {hours.weekday}
+  {hours.weekend && <><br />{hours.weekend}</>}
+</span>              </div>
             </div>
             <a
               href={WHATSAPP}
