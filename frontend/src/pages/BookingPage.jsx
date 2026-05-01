@@ -10,8 +10,8 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Textarea } from '../components/ui/textarea';
-import { Calendar } from '../components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '../components/ui/popover';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { toast } from 'sonner';
 import { SEO } from '../components/SEO';
 
@@ -45,6 +45,7 @@ export default function BookingPage() {
   const [selectedDevice, setSelectedDevice] = useState(preselected.device || null);
   const [selectedService, setSelectedService] = useState(preselected.service || null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [selectedTime, setSelectedTime] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -147,29 +148,29 @@ export default function BookingPage() {
               Your repair appointment has been scheduled. We've sent a confirmation to your email.
             </p>
 
-            <div className="bg-[#F5F5F7] rounded-2xl p-6 text-left mb-8">
-              <h3 className="font-semibold text-[#1D1D1F] mb-4 font-display">Booking Details</h3>
+            <div className="bg-[#F8F8F8] rounded-2xl p-6 text-left mb-8">
+              <h3 className="font-semibold text-[#111111] mb-4 font-display">Booking Details</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-[#86868B]">Device</span>
-                  <span className="font-medium text-[#1D1D1F]">{selectedBrand} {selectedDevice?.name}</span>
+                  <span className="text-[#777777]">Device</span>
+                  <span className="font-medium text-[#111111]">{selectedBrand} {selectedDevice?.name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#86868B]">Service</span>
-                  <span className="font-medium text-[#1D1D1F]">{selectedService?.name}</span>
+                  <span className="text-[#777777]">Service</span>
+                  <span className="font-medium text-[#111111]">{selectedService?.name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#86868B]">Date</span>
-                  <span className="font-medium text-[#1D1D1F]">{selectedDate && format(selectedDate, 'EEEE, MMM d')}</span>
+                  <span className="text-[#777777]">Date</span>
+                  <span className="font-medium text-[#111111]">{selectedDate && format(selectedDate, 'EEEE, MMM d')}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#86868B]">Time</span>
-                  <span className="font-medium text-[#1D1D1F]">{selectedTime}</span>
+                  <span className="text-[#777777]">Time</span>
+                  <span className="font-medium text-[#111111]">{selectedTime}</span>
                 </div>
                 <div className="h-px bg-black/5 my-2" />
                 <div className="flex justify-between">
-                  <span className="font-medium text-[#1D1D1F]">Total</span>
-                  <span className="font-semibold text-[#1D1D1F] text-lg">{pricing && formatPrice(pricing.price)}</span>
+                  <span className="font-medium text-[#111111]">Total</span>
+                  <span className="font-semibold text-[#111111] text-lg">{pricing && formatPrice(pricing.price)}</span>
                 </div>
               </div>
             </div>
@@ -177,14 +178,14 @@ export default function BookingPage() {
             <div className="space-y-3">
               <Button
                 disabled
-                className="w-full bg-[#86868B] text-white rounded-full h-14 text-base font-medium cursor-not-allowed opacity-70"
+                className="w-full bg-[#CCCCCC] text-white rounded-full h-14 text-base font-medium cursor-not-allowed opacity-70"
                 data-testid="pay-now-btn"
               >
                 Pay Online — Coming Soon
               </Button>
               <Button
                 onClick={() => navigate('/')}
-                className="w-full bg-[#0066CC] hover:bg-[#0071E3] text-white rounded-full h-14 text-base font-medium press-effect"
+                className="w-full bg-[#E31E24] hover:bg-[#E31E24] text-white rounded-full h-14 text-base font-medium press-effect"
               >
                 Pay at Store
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -201,7 +202,7 @@ export default function BookingPage() {
       <SEO title="Book Your Repair" description="Schedule your phone repair appointment online. Same-day service available." />
       
       {/* Header */}
-      <section className="pt-32 pb-12 bg-gradient-to-b from-[#F5F5F7] to-white">
+      <section className="pt-32 pb-12 bg-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -223,13 +224,13 @@ export default function BookingPage() {
                 <div className={cn(
                   'w-12 h-12 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300',
                   step > s.num ? 'bg-[#34C759] text-white' :
-                  step === s.num ? 'bg-[#0066CC] text-white' : 'bg-[#F5F5F7] text-[#86868B]'
+                  step === s.num ? 'bg-[#E31E24] text-white' : 'bg-[#F8F8F8] text-[#777777]'
                 )}>
                   {step > s.num ? <Check className="w-5 h-5" /> : s.num}
                 </div>
                 <p className={cn(
                   'mt-2 text-xs font-medium hidden md:block',
-                  step >= s.num ? 'text-[#1D1D1F]' : 'text-[#86868B]'
+                  step >= s.num ? 'text-[#111111]' : 'text-[#777777]'
                 )}>{s.title}</p>
               </div>
               {index < steps.length - 1 && (
@@ -265,8 +266,8 @@ export default function BookingPage() {
                       className={cn(
                         'p-6 rounded-2xl text-left transition-all duration-300 press-effect',
                         selectedBrand === brand
-                          ? 'bg-[#0066CC] text-white shadow-[0_4px_24px_rgba(0,102,204,0.3)]'
-                          : 'bg-[#F5F5F7] text-[#1D1D1F] hover:bg-[#E8E8ED]'
+                          ? 'bg-[#E31E24] text-white shadow-[0_4px_24px_rgba(227,30,36,0.3)]'
+                          : 'bg-[#F8F8F8] text-[#111111] hover:bg-[#EFEFEF]'
                       )}
                       data-testid={`book-brand-${brand.toLowerCase()}`}
                     >
@@ -290,8 +291,8 @@ export default function BookingPage() {
                         className={cn(
                           'p-4 rounded-xl text-left transition-all duration-300 press-effect flex items-center gap-3',
                           selectedDevice?.id === device.id
-                            ? 'bg-[#0066CC] text-white'
-                            : 'bg-[#F5F5F7] text-[#1D1D1F] hover:bg-[#E8E8ED]'
+                            ? 'bg-[#E31E24] text-white'
+                            : 'bg-[#F8F8F8] text-[#111111] hover:bg-[#EFEFEF]'
                         )}
                         data-testid={`book-device-${device.id}`}
                       >
@@ -306,7 +307,7 @@ export default function BookingPage() {
               <Button
                 onClick={() => setStep(2)}
                 disabled={!selectedDevice}
-                className="w-full bg-[#0066CC] hover:bg-[#0071E3] text-white rounded-full h-14 text-base font-medium press-effect disabled:opacity-50"
+                className="w-full bg-[#E31E24] hover:bg-[#E31E24] text-white rounded-full h-14 text-base font-medium press-effect disabled:opacity-50"
                 data-testid="book-next-step-1"
               >
                 Continue
@@ -324,9 +325,9 @@ export default function BookingPage() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-8"
             >
-              <div className="flex items-center gap-4 p-4 bg-[#F5F5F7] rounded-xl">
-                <Smartphone className="w-5 h-5 text-[#86868B]" />
-                <span className="font-medium text-[#1D1D1F]">{selectedBrand} {selectedDevice?.name}</span>
+              <div className="flex items-center gap-4 p-4 bg-[#F8F8F8] rounded-xl">
+                <Smartphone className="w-5 h-5 text-[#777777]" />
+                <span className="font-medium text-[#111111]">{selectedBrand} {selectedDevice?.name}</span>
               </div>
 
               <div>
@@ -339,13 +340,13 @@ export default function BookingPage() {
                       className={cn(
                         'w-full p-5 rounded-xl text-left transition-all duration-300 press-effect',
                         selectedService?.id === service.id
-                          ? 'bg-[#0066CC] text-white shadow-[0_4px_24px_rgba(0,102,204,0.3)]'
-                          : 'bg-[#F5F5F7] text-[#1D1D1F] hover:bg-[#E8E8ED]'
+                          ? 'bg-[#E31E24] text-white shadow-[0_4px_24px_rgba(227,30,36,0.3)]'
+                          : 'bg-[#F8F8F8] text-[#111111] hover:bg-[#EFEFEF]'
                       )}
                       data-testid={`book-service-${service.id}`}
                     >
                       <p className="font-semibold mb-1">{service.name}</p>
-                      <p className={cn('text-sm', selectedService?.id === service.id ? 'text-white/70' : 'text-[#86868B]')}>
+                      <p className={cn('text-sm', selectedService?.id === service.id ? 'text-white/70' : 'text-[#777777]')}>
                         {service.short_description}
                       </p>
                     </button>
@@ -354,20 +355,20 @@ export default function BookingPage() {
               </div>
 
               {pricing && (
-                <div className="p-4 bg-[#F5F5F7] rounded-xl flex justify-between items-center">
-                  <span className="text-[#86868B]">Estimated Price</span>
-                  <span className="text-2xl font-semibold text-[#1D1D1F] font-display">{formatPrice(pricing.price)}</span>
+                <div className="p-4 bg-[#F8F8F8] rounded-xl flex justify-between items-center">
+                  <span className="text-[#777777]">Estimated Price</span>
+                  <span className="text-2xl font-semibold text-[#111111] font-display">{formatPrice(pricing.price)}</span>
                 </div>
               )}
 
               <div className="flex gap-4">
-                <Button onClick={() => setStep(1)} variant="ghost" className="flex-1 bg-[#F5F5F7] hover:bg-[#E8E8ED] text-[#1D1D1F] rounded-full h-14">
+                <Button onClick={() => setStep(1)} variant="ghost" className="flex-1 bg-[#F8F8F8] hover:bg-[#EFEFEF] text-[#111111] rounded-full h-14">
                   <ArrowLeft className="w-5 h-5 mr-2" /> Back
                 </Button>
                 <Button
                   onClick={() => setStep(3)}
                   disabled={!selectedService}
-                  className="flex-1 bg-[#0066CC] hover:bg-[#0071E3] text-white rounded-full h-14 press-effect disabled:opacity-50"
+                  className="flex-1 bg-[#E31E24] hover:bg-[#E31E24] text-white rounded-full h-14 press-effect disabled:opacity-50"
                   data-testid="book-next-step-2"
                 >
                   Continue <ArrowRight className="w-5 h-5 ml-2" />
@@ -386,31 +387,40 @@ export default function BookingPage() {
               className="space-y-8"
             >
               <div>
-                <h3 className="text-h3 mb-6">Select Date</h3>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        'w-full justify-start text-left font-normal rounded-xl h-14 bg-[#F5F5F7] border-transparent hover:bg-[#E8E8ED]',
-                        !selectedDate && 'text-[#86868B]'
-                      )}
-                      data-testid="book-date-picker"
-                    >
-                      <CalendarIcon className="mr-3 h-5 w-5" />
-                      {selectedDate ? format(selectedDate, 'EEEE, MMMM d, yyyy') : 'Pick a date'}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
+                <h3 className="text-h3 mb-4">Select Date</h3>
+                {/* Trigger button */}
+                <button
+                  onClick={() => setDatePickerOpen(!datePickerOpen)}
+                  data-testid="book-date-picker"
+                  className={cn(
+                    'w-full flex items-center gap-3 px-5 h-14 rounded-2xl border-2 transition-all text-left',
+                    selectedDate ? 'bg-white border-[#E31E24] text-[#111111]' : 'bg-[#F8F8F8] border-transparent text-[#999999] hover:border-[#E31E24]/40'
+                  )}
+                >
+                  <CalendarIcon className={cn('w-5 h-5 shrink-0', selectedDate ? 'text-[#E31E24]' : 'text-[#AAAAAA]')} />
+                  <span className="font-medium text-sm flex-1">
+                    {selectedDate ? format(selectedDate, 'EEEE, MMMM d, yyyy') : 'Pick a date'}
+                  </span>
+                  {selectedDate && (
+                    <span
+                      onClick={(e) => { e.stopPropagation(); setSelectedDate(null); setDatePickerOpen(false); }}
+                      className="text-[#AAAAAA] hover:text-[#E31E24] text-xs font-bold px-2 py-1 rounded-lg hover:bg-[#E31E24]/10 transition-colors"
+                    >✕</span>
+                  )}
+                </button>
+                {/* Inline calendar dropdown */}
+                {datePickerOpen && (
+                  <div className="mt-2">
+                    <DatePicker
                       selected={selectedDate}
-                      onSelect={setSelectedDate}
-                      disabled={(date) => date < new Date() || date.getDay() === 0}
-                      initialFocus
+                      onChange={(date) => { setSelectedDate(date); setDatePickerOpen(false); }}
+                      inline
+                      minDate={new Date()}
+                      filterDate={(date) => date.getDay() !== 0}
+                      calendarClassName="hifone-calendar"
                     />
-                  </PopoverContent>
-                </Popover>
+                  </div>
+                )}
               </div>
 
               <div>
@@ -423,8 +433,8 @@ export default function BookingPage() {
                       className={cn(
                         'py-3 px-4 rounded-xl text-sm font-medium transition-all press-effect',
                         selectedTime === time
-                          ? 'bg-[#0066CC] text-white'
-                          : 'bg-[#F5F5F7] text-[#1D1D1F] hover:bg-[#E8E8ED]'
+                          ? 'bg-[#E31E24] text-white'
+                          : 'bg-[#F8F8F8] text-[#111111] hover:bg-[#EFEFEF]'
                       )}
                       data-testid={`book-time-${time.replace(/[: ]/g, '-')}`}
                     >
@@ -435,13 +445,13 @@ export default function BookingPage() {
               </div>
 
               <div className="flex gap-4">
-                <Button onClick={() => setStep(2)} variant="ghost" className="flex-1 bg-[#F5F5F7] hover:bg-[#E8E8ED] text-[#1D1D1F] rounded-full h-14">
+                <Button onClick={() => setStep(2)} variant="ghost" className="flex-1 bg-[#F8F8F8] hover:bg-[#EFEFEF] text-[#111111] rounded-full h-14">
                   <ArrowLeft className="w-5 h-5 mr-2" /> Back
                 </Button>
                 <Button
                   onClick={() => setStep(4)}
                   disabled={!selectedDate || !selectedTime}
-                  className="flex-1 bg-[#0066CC] hover:bg-[#0071E3] text-white rounded-full h-14 press-effect disabled:opacity-50"
+                  className="flex-1 bg-[#E31E24] hover:bg-[#E31E24] text-white rounded-full h-14 press-effect disabled:opacity-50"
                   data-testid="book-next-step-3"
                 >
                   Continue <ArrowRight className="w-5 h-5 ml-2" />
@@ -461,19 +471,19 @@ export default function BookingPage() {
             >
               <div className="space-y-5">
                 <div>
-                  <Label htmlFor="customer_name" className="text-sm font-medium text-[#1D1D1F]">Full Name *</Label>
+                  <Label htmlFor="customer_name" className="text-sm font-medium text-[#111111]">Full Name *</Label>
                   <Input
                     id="customer_name"
                     name="customer_name"
                     value={formData.customer_name}
                     onChange={handleInputChange}
                     placeholder="John Smith"
-                    className="mt-2 h-14 rounded-xl bg-[#F5F5F7] border-transparent focus:bg-white focus:ring-2 focus:ring-[#0066CC]"
+                    className="mt-2 h-14 rounded-xl bg-[#F8F8F8] border-transparent focus:bg-white focus:ring-2 focus:ring-[#E31E24]"
                     data-testid="book-input-name"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="customer_email" className="text-sm font-medium text-[#1D1D1F]">Email *</Label>
+                  <Label htmlFor="customer_email" className="text-sm font-medium text-[#111111]">Email *</Label>
                   <Input
                     id="customer_email"
                     name="customer_email"
@@ -481,12 +491,12 @@ export default function BookingPage() {
                     value={formData.customer_email}
                     onChange={handleInputChange}
                     placeholder="john@example.com"
-                    className="mt-2 h-14 rounded-xl bg-[#F5F5F7] border-transparent focus:bg-white focus:ring-2 focus:ring-[#0066CC]"
+                    className="mt-2 h-14 rounded-xl bg-[#F8F8F8] border-transparent focus:bg-white focus:ring-2 focus:ring-[#E31E24]"
                     data-testid="book-input-email"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="customer_phone" className="text-sm font-medium text-[#1D1D1F]">Phone *</Label>
+                  <Label htmlFor="customer_phone" className="text-sm font-medium text-[#111111]">Phone *</Label>
                   <Input
                     id="customer_phone"
                     name="customer_phone"
@@ -494,19 +504,19 @@ export default function BookingPage() {
                     value={formData.customer_phone}
                     onChange={handleInputChange}
                     placeholder="0400 000 000"
-                    className="mt-2 h-14 rounded-xl bg-[#F5F5F7] border-transparent focus:bg-white focus:ring-2 focus:ring-[#0066CC]"
+                    className="mt-2 h-14 rounded-xl bg-[#F8F8F8] border-transparent focus:bg-white focus:ring-2 focus:ring-[#E31E24]"
                     data-testid="book-input-phone"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="notes" className="text-sm font-medium text-[#1D1D1F]">Notes (Optional)</Label>
+                  <Label htmlFor="notes" className="text-sm font-medium text-[#111111]">Notes (Optional)</Label>
                   <Textarea
                     id="notes"
                     name="notes"
                     value={formData.notes}
                     onChange={handleInputChange}
                     placeholder="Any additional details..."
-                    className="mt-2 rounded-xl bg-[#F5F5F7] border-transparent focus:bg-white focus:ring-2 focus:ring-[#0066CC]"
+                    className="mt-2 rounded-xl bg-[#F8F8F8] border-transparent focus:bg-white focus:ring-2 focus:ring-[#E31E24]"
                     rows={3}
                     data-testid="book-input-notes"
                   />
@@ -514,26 +524,26 @@ export default function BookingPage() {
               </div>
 
               {/* Summary */}
-              <div className="bg-[#F5F5F7] rounded-2xl p-6">
-                <h4 className="font-semibold text-[#1D1D1F] mb-4 font-display">Booking Summary</h4>
+              <div className="bg-[#F8F8F8] rounded-2xl p-6">
+                <h4 className="font-semibold text-[#111111] mb-4 font-display">Booking Summary</h4>
                 <div className="space-y-3 text-sm">
-                  <div className="flex justify-between"><span className="text-[#86868B]">Device</span><span className="text-[#1D1D1F]">{selectedBrand} {selectedDevice?.name}</span></div>
-                  <div className="flex justify-between"><span className="text-[#86868B]">Service</span><span className="text-[#1D1D1F]">{selectedService?.name}</span></div>
-                  <div className="flex justify-between"><span className="text-[#86868B]">Date</span><span className="text-[#1D1D1F]">{selectedDate && format(selectedDate, 'MMM d, yyyy')}</span></div>
-                  <div className="flex justify-between"><span className="text-[#86868B]">Time</span><span className="text-[#1D1D1F]">{selectedTime}</span></div>
+                  <div className="flex justify-between"><span className="text-[#777777]">Device</span><span className="text-[#111111]">{selectedBrand} {selectedDevice?.name}</span></div>
+                  <div className="flex justify-between"><span className="text-[#777777]">Service</span><span className="text-[#111111]">{selectedService?.name}</span></div>
+                  <div className="flex justify-between"><span className="text-[#777777]">Date</span><span className="text-[#111111]">{selectedDate && format(selectedDate, 'MMM d, yyyy')}</span></div>
+                  <div className="flex justify-between"><span className="text-[#777777]">Time</span><span className="text-[#111111]">{selectedTime}</span></div>
                   <div className="h-px bg-black/5 my-2" />
-                  <div className="flex justify-between"><span className="font-medium text-[#1D1D1F]">Total</span><span className="text-xl font-semibold text-[#1D1D1F] font-display">{pricing ? formatPrice(pricing.price) : 'TBD'}</span></div>
+                  <div className="flex justify-between"><span className="font-medium text-[#111111]">Total</span><span className="text-xl font-semibold text-[#111111] font-display">{pricing ? formatPrice(pricing.price) : 'TBD'}</span></div>
                 </div>
               </div>
 
               <div className="flex gap-4">
-                <Button onClick={() => setStep(3)} variant="ghost" className="flex-1 bg-[#F5F5F7] hover:bg-[#E8E8ED] text-[#1D1D1F] rounded-full h-14">
+                <Button onClick={() => setStep(3)} variant="ghost" className="flex-1 bg-[#F8F8F8] hover:bg-[#EFEFEF] text-[#111111] rounded-full h-14">
                   <ArrowLeft className="w-5 h-5 mr-2" /> Back
                 </Button>
                 <Button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="flex-1 bg-[#0066CC] hover:bg-[#0071E3] text-white rounded-full h-14 press-effect disabled:opacity-50"
+                  className="flex-1 bg-[#E31E24] hover:bg-[#E31E24] text-white rounded-full h-14 press-effect disabled:opacity-50"
                   data-testid="book-submit"
                 >
                   {loading ? 'Creating...' : 'Confirm Booking'}

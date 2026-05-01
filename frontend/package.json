@@ -63,30 +63,33 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-"reactSnap": {
-  "source": "build",
-  "destinationDir": "build",
-  "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
-  "puppeteerExecutablePath": "",
-  "crawl": true,
-  "inlineCss": false,
-  "removeBlobs": true,
-  "publicPath": "/",
-  "minifyHtml": {
-    "collapseWhitespace": false,
-    "removeComments": false
+  "reactSnap": {
+    "source": "build",
+    "destinationDir": "build",
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ],
+    "puppeteerExecutablePath": "",
+    "crawl": true,
+    "inlineCss": false,
+    "removeBlobs": true,
+    "publicPath": "/",
+    "minifyHtml": {
+      "collapseWhitespace": false,
+      "removeComments": false
+    },
+    "include": [
+      "/",
+      "/services",
+      "/devices",
+      "/book",
+      "/contact",
+      "/about",
+      "/blog",
+      "/accessories"
+    ]
   },
-  "include": [
-    "/",
-    "/services",
-    "/devices",
-    "/book",
-    "/contact",
-    "/about",
-    "/blog",
-    "/accessories"
-  ]
-},
   "browserslist": {
     "production": [
       ">0.2%",
