@@ -15,7 +15,7 @@ const trustBadges = [
 
 const trustSignals = [
   { icon: '⏱️', title: '30–60 Minutes', sub: 'Most repairs done' },
-  { icon: '⭐', title: '500+ Customers', sub: '5.0 Google Rating' },
+  { icon: '⭐', title: '700+ Reviews', sub: '5.0 Google Rating' },
   { icon: '💰', title: 'Upfront Pricing', sub: 'No hidden fees' },
   { icon: '🔧', title: 'Certified Techs', sub: '5+ years experience' },
 ];

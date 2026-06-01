@@ -4,16 +4,6 @@ import { Link } from 'react-router-dom';
 import aus_post_logo from "../../assets/Logo/Australia_post_logo.jpg"
 const WHATSAPP = 'https://wa.me/61432977092';
 
-// PRICING TABLE
-const PRICING = [
-  { service: 'iPhone Screen Repair', price: 'From $89', icon: '📱' },
-  { service: 'Samsung Screen Repair', price: 'From $79', icon: '🤖' },
-  { service: 'iPhone Battery', price: 'From $59', icon: '🔋' },
-  { service: 'Samsung Battery', price: 'From $49', icon: '🔋' },
-  { service: 'Laptop Screen', price: 'From $99', icon: '💻' },
-  { service: 'Water Damage', price: 'From $79', icon: '💧' },
-];
-
 // OFFERS
 const OFFERS = [
   {
@@ -244,17 +234,21 @@ export const WhyChooseUs = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <p className="text-overline mb-3">Transparent Pricing</p>
-              <h2 className="text-h2 mb-3">Repair Prices</h2>
-              <p className="text-[#555555] mb-6 text-sm">Final price confirmed before we start — no surprises</p>
+              <p className="text-overline mb-3">What We Fix</p>
+              <h2 className="text-h2 mb-3">Repair Services</h2>
+              <p className="text-[#555555] mb-6 text-sm">Price confirmed before we start — no surprises, ever</p>
               <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
-                {PRICING.map((item, i) => (
-                  <div key={item.service} className={`flex items-center justify-between px-6 py-4 ${i !== PRICING.length - 1 ? 'border-b border-gray-100' : ''}`}>
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm">{i + 1}.</span>
-                      <span className="font-medium text-[#111111] text-sm">{item.service}</span>
-                    </div>
-                    <span className="font-bold text-[#E31E24] text-sm">{item.price}</span>
+                {[
+                  { service: 'iPhone Screen Repair', icon: '📱' },
+                  { service: 'Samsung Screen Repair', icon: '🤖' },
+                  { service: 'iPhone Battery Replacement', icon: '🔋' },
+                  { service: 'Samsung Battery Replacement', icon: '🔋' },
+                  { service: 'Laptop Screen Repair', icon: '💻' },
+                  { service: 'Water Damage Treatment', icon: '💧' },
+                ].map((item, i, arr) => (
+                  <div key={item.service} className={`flex items-center gap-3 px-6 py-4 ${i !== arr.length - 1 ? 'border-b border-gray-100' : ''}`}>
+                    <span className="text-lg">{item.icon}</span>
+                    <span className="font-medium text-[#111111] text-sm">{item.service}</span>
                   </div>
                 ))}
               </div>
@@ -267,7 +261,7 @@ export const WhyChooseUs = () => {
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
-                Get Exact Quote on WhatsApp
+                Get a Quote on WhatsApp
               </a>
             </motion.div>
 

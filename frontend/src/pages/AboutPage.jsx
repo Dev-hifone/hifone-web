@@ -54,7 +54,7 @@ export default function AboutPage() {
               {/* Trust stats row */}
               <div className="grid grid-cols-3 gap-4 mb-8">
                 {[
-                  { value: '500+', label: 'Happy Customers' },
+                  { value: '700+', label: 'Happy Customers' },
                   { value: '5.0 ⭐', label: 'Google Rating' },
                   { value: '5+ Yrs', label: 'In Business' },
                 ].map((stat) => (
@@ -76,7 +76,7 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <p className="text-white text-sm font-bold">5.0 on Google</p>
-                  <p className="text-white/50 text-xs">Verified customer reviews</p>
+                  <p className="text-white/50 text-xs">700+ verified reviews</p>
                 </div>
                 <a href="https://g.page/r/CVxRDB1RTAfvEAo" target="_blank" rel="noopener noreferrer"
                   className="text-[#E31E24] text-xs font-bold hover:underline ml-2">Read Reviews →</a>
