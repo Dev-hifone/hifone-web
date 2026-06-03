@@ -30,8 +30,8 @@ GOOGLE_PLACE_ID = os.environ.get('GOOGLE_PLACE_ID', 'ChIJxxxxxxxxxxxxxxx')
 
 # Resend Email configuration
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', 're_SW9cdohm_88ZoVPEcB5G4MXnKq4yZ4aWG')
-SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'bookings@hifone.com.au')
-ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info@hifone.com.au')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info.hifone@gmail.com')
 resend.api_key = RESEND_API_KEY
 
 # JWT configuration
