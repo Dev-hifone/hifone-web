@@ -605,6 +605,15 @@ async def update_booking_status(booking_id: str, status: str):
         raise HTTPException(status_code=404, detail="Booking not found")
     return {"message": "Status updated"}
 
+@api_router.get("/test-email")
+async def send_test_email_get():
+    """Quick GET test — no auth needed. Remove after confirming email works."""
+    html = "<h2>✅ HiFone Email Working</h2><p>Resend is configured correctly. Booking emails will now be sent automatically.</p>"
+    result = await send_email(to=ADMIN_EMAIL, subject="HiFone Test Email — Setup Confirmed", html=html)
+    if result:
+        return {"status": "sent", "to": ADMIN_EMAIL, "message": "Check your inbox!"}
+    return {"status": "failed", "to": ADMIN_EMAIL, "message": "Check RESEND_API_KEY and SENDER_EMAIL env vars"}
+
 @api_router.post("/admin/test-email")
 async def send_test_email(admin=Depends(get_current_admin)):
     """Send a test email to the admin to verify email setup"""
