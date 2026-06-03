@@ -293,69 +293,79 @@ async def send_email(to: str, subject: str, html: str):
 
 
 def build_customer_booking_email(booking: dict, device_name: str, service_name: str, price: float) -> str:
+    price_display = f"${price:.2f} AUD" if price > 0 else "Confirmed in-store"
+    price_color = "#E31E24" if price > 0 else "#34C759"
+    notes_row = f'''<tr><td style="color:#888;font-size:13px;padding:7px 0;border-bottom:1px solid #EEE;">Notes</td><td style="color:#111;font-size:13px;text-align:right;padding:7px 0;border-bottom:1px solid #EEE;">{booking.get("notes","")}</td></tr>''' if booking.get("notes") else ""
     return f"""
     <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;">
-      <div style="background:#0066CC;padding:32px;text-align:center;">
-        <h1 style="color:#ffffff;font-size:24px;margin:0;">Booking Confirmed</h1>
-        <p style="color:#ffffffcc;margin:8px 0 0;font-size:14px;">Thank you for choosing HiFone Repairs</p>
+      <div style="background:#E31E24;padding:32px;text-align:center;">
+        <h1 style="color:#ffffff;font-size:26px;margin:0;font-weight:700;">Booking Confirmed ✓</h1>
+        <p style="color:#ffffffcc;margin:10px 0 0;font-size:15px;">Thank you for choosing HiFone Repairs</p>
       </div>
       <div style="padding:32px;">
-        <p style="color:#1D1D1F;font-size:16px;margin:0 0 24px;">Hi {booking.get('customer_name', 'there')},</p>
-        <p style="color:#86868B;font-size:14px;line-height:1.6;margin:0 0 24px;">
-          Your repair booking has been received. Here are the details:
-        </p>
-        <div style="background:#F5F5F7;border-radius:12px;padding:24px;margin:0 0 24px;">
+        <p style="color:#111111;font-size:16px;margin:0 0 8px;">Hi <strong>{booking.get('customer_name','there')}</strong>,</p>
+        <p style="color:#555555;font-size:14px;line-height:1.6;margin:0 0 24px;">Your repair booking is confirmed. See you soon!</p>
+        <div style="background:#F8F8F8;border-radius:12px;padding:24px;margin:0 0 24px;">
           <table style="width:100%;border-collapse:collapse;">
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Device</td><td style="color:#1D1D1F;font-size:14px;font-weight:600;text-align:right;padding:6px 0;">{device_name}</td></tr>
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Service</td><td style="color:#1D1D1F;font-size:14px;font-weight:600;text-align:right;padding:6px 0;">{service_name}</td></tr>
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Date</td><td style="color:#1D1D1F;font-size:14px;font-weight:600;text-align:right;padding:6px 0;">{booking.get('booking_date', 'ASAP')}</td></tr>
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Time</td><td style="color:#1D1D1F;font-size:14px;font-weight:600;text-align:right;padding:6px 0;">{booking.get('booking_time', 'Any')}</td></tr>
-            <tr style="border-top:1px solid #D1D1D6;"><td style="color:#86868B;font-size:13px;padding:12px 0 6px;">Price</td><td style="color:#0066CC;font-size:18px;font-weight:700;text-align:right;padding:12px 0 6px;">${price:.2f} AUD</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:7px 0;border-bottom:1px solid #EEE;">Device</td><td style="color:#111;font-size:14px;font-weight:600;text-align:right;padding:7px 0;border-bottom:1px solid #EEE;">{device_name}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:7px 0;border-bottom:1px solid #EEE;">Service</td><td style="color:#111;font-size:14px;font-weight:600;text-align:right;padding:7px 0;border-bottom:1px solid #EEE;">{service_name}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:7px 0;border-bottom:1px solid #EEE;">Date</td><td style="color:#111;font-size:14px;font-weight:600;text-align:right;padding:7px 0;border-bottom:1px solid #EEE;">{booking.get('booking_date','')}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:7px 0;border-bottom:1px solid #EEE;">Time</td><td style="color:#111;font-size:14px;font-weight:600;text-align:right;padding:7px 0;border-bottom:1px solid #EEE;">{booking.get('booking_time','')}</td></tr>
+            {notes_row}
+            <tr><td style="color:#888;font-size:13px;padding:12px 0 0;">Price</td><td style="color:{price_color};font-size:20px;font-weight:700;text-align:right;padding:12px 0 0;">{price_display}</td></tr>
           </table>
         </div>
-        <div style="background:#34C75910;border-radius:12px;padding:16px;margin:0 0 24px;">
-          <p style="color:#34C759;font-size:13px;font-weight:600;margin:0 0 4px;">What's next?</p>
-          <p style="color:#86868B;font-size:13px;line-height:1.5;margin:0;">
-            Visit our store at <strong>Kurralta Park, Adelaide SA 5037</strong>. 
-            Most repairs are completed same-day within 30-60 minutes.
+        <div style="background:#FFF5F5;border-left:4px solid #E31E24;border-radius:0 8px 8px 0;padding:16px 20px;margin:0 0 24px;">
+          <p style="color:#E31E24;font-size:13px;font-weight:700;margin:0 0 4px;">📍 Where to come</p>
+          <p style="color:#555;font-size:13px;line-height:1.6;margin:0;">
+            <strong>Shop 153 Anzac Hwy, Kurralta Park SA 5037</strong><br/>
+            Mon–Sat: 9am–6pm &nbsp;|&nbsp; Sun: Closed<br/>
+            Most repairs done same-day within 30–60 minutes.
           </p>
         </div>
-        <p style="color:#86868B;font-size:13px;line-height:1.5;margin:0 0 24px;">
-          If you have questions, call us at <strong>0432 977 092</strong> or reply to this email.
+        <p style="color:#888;font-size:13px;margin:0 0 24px;">
+          Questions? Call <strong style="color:#111;">0432 977 092</strong> or WhatsApp us anytime.
         </p>
         <div style="text-align:center;">
-          <a href="https://www.hifone.com.au" style="display:inline-block;background:#0066CC;color:#ffffff;padding:12px 32px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:600;">Visit Our Website</a>
+          <a href="https://hifone.com.au" style="display:inline-block;background:#E31E24;color:#fff;padding:13px 36px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:700;">Visit HiFone.com.au</a>
         </div>
       </div>
-      <div style="background:#F5F5F7;padding:20px;text-align:center;">
-        <p style="color:#86868B;font-size:12px;margin:0;">HiFone Repairs • Kurralta Park, Adelaide SA 5037 • 0432 977 092</p>
+      <div style="background:#111111;padding:20px;text-align:center;">
+        <p style="color:#888;font-size:12px;margin:0;">HiFone Repairs &nbsp;•&nbsp; Kurralta Park SA 5037 &nbsp;•&nbsp; 0432 977 092</p>
       </div>
     </div>
     """
 
 
 def build_admin_booking_email(booking: dict, device_name: str, service_name: str, price: float) -> str:
+    price_display = f"${price:.2f} AUD" if price > 0 else "TBD — confirm in store"
     return f"""
     <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;">
-      <div style="background:#1D1D1F;padding:24px;text-align:center;">
-        <h1 style="color:#ffffff;font-size:20px;margin:0;">New Booking Received</h1>
+      <div style="background:#111111;padding:24px;text-align:center;">
+        <h1 style="color:#ffffff;font-size:20px;margin:0;">🔔 New Booking — HiFone</h1>
       </div>
-      <div style="padding:32px;">
-        <div style="background:#F5F5F7;border-radius:12px;padding:24px;margin:0 0 20px;">
+      <div style="padding:24px;">
+        <div style="background:#F8F8F8;border-radius:12px;padding:20px;margin:0 0 16px;">
+          <p style="color:#E31E24;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px;">Customer</p>
           <table style="width:100%;border-collapse:collapse;">
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Customer</td><td style="color:#1D1D1F;font-size:14px;font-weight:600;text-align:right;padding:6px 0;">{booking.get('customer_name', 'N/A')}</td></tr>
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Email</td><td style="color:#1D1D1F;font-size:14px;text-align:right;padding:6px 0;">{booking.get('customer_email', 'N/A')}</td></tr>
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Phone</td><td style="color:#1D1D1F;font-size:14px;text-align:right;padding:6px 0;">{booking.get('customer_phone', 'N/A')}</td></tr>
-            <tr style="border-top:1px solid #D1D1D6;"><td style="color:#86868B;font-size:13px;padding:12px 0 6px;">Device</td><td style="color:#1D1D1F;font-size:14px;font-weight:600;text-align:right;padding:12px 0 6px;">{device_name}</td></tr>
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Service</td><td style="color:#1D1D1F;font-size:14px;font-weight:600;text-align:right;padding:6px 0;">{service_name}</td></tr>
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Date</td><td style="color:#1D1D1F;font-size:14px;text-align:right;padding:6px 0;">{booking.get('booking_date', 'ASAP')}</td></tr>
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Time</td><td style="color:#1D1D1F;font-size:14px;text-align:right;padding:6px 0;">{booking.get('booking_time', 'Any')}</td></tr>
-            <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Notes</td><td style="color:#1D1D1F;font-size:14px;text-align:right;padding:6px 0;">{booking.get('notes', 'None')}</td></tr>
-            <tr style="border-top:1px solid #D1D1D6;"><td style="color:#86868B;font-size:13px;padding:12px 0 6px;">Price</td><td style="color:#0066CC;font-size:18px;font-weight:700;text-align:right;padding:12px 0 6px;">${price:.2f} AUD</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:6px 0;border-bottom:1px solid #EEE;">Name</td><td style="color:#111;font-size:14px;font-weight:600;text-align:right;padding:6px 0;border-bottom:1px solid #EEE;">{booking.get('customer_name','N/A')}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:6px 0;border-bottom:1px solid #EEE;">Phone</td><td style="color:#111;font-size:14px;font-weight:600;text-align:right;padding:6px 0;border-bottom:1px solid #EEE;">{booking.get('customer_phone','N/A')}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:6px 0;">Email</td><td style="color:#111;font-size:13px;text-align:right;padding:6px 0;">{booking.get('customer_email','N/A')}</td></tr>
           </table>
         </div>
-        <div style="text-align:center;">
-          <a href="https://www.hifone.com.au/admin/bookings" style="display:inline-block;background:#0066CC;color:#ffffff;padding:12px 32px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:600;">View in Admin Panel</a>
+        <div style="background:#F8F8F8;border-radius:12px;padding:20px;margin:0 0 16px;">
+          <p style="color:#E31E24;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px;">Booking Details</p>
+          <table style="width:100%;border-collapse:collapse;">
+            <tr><td style="color:#888;font-size:13px;padding:6px 0;border-bottom:1px solid #EEE;">Device</td><td style="color:#111;font-size:14px;font-weight:600;text-align:right;padding:6px 0;border-bottom:1px solid #EEE;">{device_name}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:6px 0;border-bottom:1px solid #EEE;">Service</td><td style="color:#111;font-size:14px;font-weight:600;text-align:right;padding:6px 0;border-bottom:1px solid #EEE;">{service_name}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:6px 0;border-bottom:1px solid #EEE;">Date</td><td style="color:#111;font-size:14px;font-weight:700;text-align:right;padding:6px 0;border-bottom:1px solid #EEE;">{booking.get('booking_date','')}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:6px 0;border-bottom:1px solid #EEE;">Time</td><td style="color:#111;font-size:14px;font-weight:700;text-align:right;padding:6px 0;border-bottom:1px solid #EEE;">{booking.get('booking_time','')}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:6px 0;border-bottom:1px solid #EEE;">Notes</td><td style="color:#111;font-size:13px;text-align:right;padding:6px 0;border-bottom:1px solid #EEE;">{booking.get('notes','—') or '—'}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:10px 0 0;">Price</td><td style="color:#E31E24;font-size:18px;font-weight:700;text-align:right;padding:10px 0 0;">{price_display}</td></tr>
+          </table>
+        </div>
+        <div style="text-align:center;margin-top:8px;">
+          <a href="https://hi-fhone-demo.vercel.app/admin" style="display:inline-block;background:#E31E24;color:#fff;padding:13px 36px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:700;">View in Admin Panel</a>
         </div>
       </div>
     </div>
@@ -569,9 +579,9 @@ async def create_booking(booking: BookingCreate):
     doc = prepare_doc_for_insert(booking_obj)
     await db.bookings.insert_one(doc)
     
-    # Send email notifications (fire-and-forget, don't block the response)
+    # Send email notifications — awaited so emails are guaranteed to send
     booking_dict = booking_obj.model_dump()
-    asyncio.create_task(_send_booking_emails(booking_dict, device_name, service_name, price))
+    await _send_booking_emails(booking_dict, device_name, service_name, price)
     
     return booking_obj
 
