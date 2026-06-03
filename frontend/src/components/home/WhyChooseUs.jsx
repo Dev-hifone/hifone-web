@@ -235,7 +235,7 @@ export const WhyChooseUs = () => {
               viewport={{ once: true }}
             >
               <p className="text-overline mb-3">What We Fix</p>
-              <h2 className="text-h2 mb-3">Repair Services</h2>
+              <h2 className="text-h2 mb-3">Our Repairs</h2>
               <p className="text-[#555555] mb-6 text-sm">Price confirmed before we start — no surprises, ever</p>
               <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
                 {[
@@ -272,8 +272,9 @@ export const WhyChooseUs = () => {
               viewport={{ once: true }}
               className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm"
             >
-              <p className="text-overline mb-2">Free Quote</p>
-              <h3 className="font-display font-bold text-[#111111] text-2xl mb-6">Book a Repair</h3>
+              <p className="text-overline mb-2">Get a Free Quote</p>
+              <h3 className="font-display font-bold text-[#111111] text-2xl mb-1">WhatsApp Quote</h3>
+              <p className="text-sm text-[#777777] mb-5">Tell us your device and issue — we'll reply with a price in minutes via WhatsApp.</p>
               <QuickQuoteWizard />
             </motion.div>
           </div>

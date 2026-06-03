@@ -556,13 +556,10 @@ async def create_booking(booking: BookingCreate):
         {"_id": 0}
     )
     
-    if not pricing:
-        raise HTTPException(status_code=400, detail="Pricing not found for this device and service")
-    
     booking_data = booking.model_dump()
     device_name = f"{device['brand']} {device['name']}" if device else "Unknown"
     service_name = service["name"] if service else "Unknown"
-    price = pricing["price"]
+    price = pricing["price"] if pricing else 0.0  # Price confirmed in-store if not in system
     
     booking_data["device_name"] = device_name
     booking_data["service_name"] = service_name
