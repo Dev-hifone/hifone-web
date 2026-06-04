@@ -323,9 +323,7 @@ def build_customer_booking_email(booking: dict, device_name: str, service_name: 
             Most repairs done same-day within 30–60 minutes.
           </p>
         </div>
-        <p style="color:#888;font-size:13px;margin:0 0 24px;">
-          Questions? Call <strong style="color:#111;">0432 977 092</strong> or WhatsApp us anytime.
-        </p>
+        <p style="color:#888;font-size:13px;margin:0 0 24px;">Questions? Call <strong style="color:#111;">0432 977 092</strong> or WhatsApp us anytime.</p>
         <div style="text-align:center;">
           <a href="https://hifone.com.au" style="display:inline-block;background:#E31E24;color:#fff;padding:13px 36px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:700;">Visit HiFone.com.au</a>
         </div>
@@ -349,7 +347,7 @@ def build_admin_booking_email(booking: dict, device_name: str, service_name: str
           <p style="color:#E31E24;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px;">Customer</p>
           <table style="width:100%;border-collapse:collapse;">
             <tr><td style="color:#888;font-size:13px;padding:6px 0;border-bottom:1px solid #EEE;">Name</td><td style="color:#111;font-size:14px;font-weight:600;text-align:right;padding:6px 0;border-bottom:1px solid #EEE;">{booking.get('customer_name','N/A')}</td></tr>
-            <tr><td style="color:#888;font-size:13px;padding:6px 0;border-bottom:1px solid #EEE;">Phone</td><td style="color:#111;font-size:14px;font-weight:600;text-align:right;padding:6px 0;border-bottom:1px solid #EEE;">{booking.get('customer_phone','N/A')}</td></tr>
+            <tr><td style="color:#888;font-size:13px;padding:6px 0;border-bottom:1px solid #EEE;">Phone</td><td style="color:#111;font-size:14px;font-weight:700;text-align:right;padding:6px 0;border-bottom:1px solid #EEE;">{booking.get('customer_phone','N/A')}</td></tr>
             <tr><td style="color:#888;font-size:13px;padding:6px 0;">Email</td><td style="color:#111;font-size:13px;text-align:right;padding:6px 0;">{booking.get('customer_email','N/A')}</td></tr>
           </table>
         </div>
@@ -579,7 +577,7 @@ async def create_booking(booking: BookingCreate):
     doc = prepare_doc_for_insert(booking_obj)
     await db.bookings.insert_one(doc)
     
-    # Send email notifications — awaited so emails are guaranteed to send
+    # Send email notifications (fire-and-forget, don't block the response)
     booking_dict = booking_obj.model_dump()
     await _send_booking_emails(booking_dict, device_name, service_name, price)
     
@@ -614,15 +612,6 @@ async def update_booking_status(booking_id: str, status: str):
     if result.modified_count == 0:
         raise HTTPException(status_code=404, detail="Booking not found")
     return {"message": "Status updated"}
-
-@api_router.get("/test-email")
-async def send_test_email_get():
-    """Quick GET test — no auth needed. Remove after confirming email works."""
-    html = "<h2>✅ HiFone Email Working</h2><p>Resend is configured correctly. Booking emails will now be sent automatically.</p>"
-    result = await send_email(to=ADMIN_EMAIL, subject="HiFone Test Email — Setup Confirmed", html=html)
-    if result:
-        return {"status": "sent", "to": ADMIN_EMAIL, "message": "Check your inbox!"}
-    return {"status": "failed", "to": ADMIN_EMAIL, "message": "Check RESEND_API_KEY and SENDER_EMAIL env vars"}
 
 @api_router.post("/admin/test-email")
 async def send_test_email(admin=Depends(get_current_admin)):
