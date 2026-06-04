@@ -363,7 +363,7 @@ def build_admin_booking_email(booking: dict, device_name: str, service_name: str
           </table>
         </div>
         <div style="text-align:center;margin-top:8px;">
-          <a href="https://hi-fhone-demo.vercel.app/admin" style="display:inline-block;background:#E31E24;color:#fff;padding:13px 36px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:700;">View in Admin Panel</a>
+          <a href="https://www.hifone.com.au/admin" style="display:inline-block;background:#E31E24;color:#fff;padding:13px 36px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:700;">View in Admin Panel</a>
         </div>
       </div>
     </div>
