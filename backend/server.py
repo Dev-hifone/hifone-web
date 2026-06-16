@@ -310,7 +310,7 @@ def build_customer_booking_email(booking: dict, device_name: str, service_name: 
             <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Service</td><td style="color:#1D1D1F;font-size:14px;font-weight:600;text-align:right;padding:6px 0;">{service_name}</td></tr>
             <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Date</td><td style="color:#1D1D1F;font-size:14px;font-weight:600;text-align:right;padding:6px 0;">{booking.get('booking_date', 'ASAP')}</td></tr>
             <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Time</td><td style="color:#1D1D1F;font-size:14px;font-weight:600;text-align:right;padding:6px 0;">{booking.get('booking_time', 'Any')}</td></tr>
-            <tr style="border-top:1px solid #D1D1D6;"><td style="color:#86868B;font-size:13px;padding:12px 0 6px;">Price</td><td style="color:#0066CC;font-size:18px;font-weight:700;text-align:right;padding:12px 0 6px;">${price:.2f} AUD</td></tr>
+
           </table>
         </div>
         <div style="background:#34C75910;border-radius:12px;padding:16px;margin:0 0 24px;">
@@ -351,7 +351,7 @@ def build_admin_booking_email(booking: dict, device_name: str, service_name: str
             <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Date</td><td style="color:#1D1D1F;font-size:14px;text-align:right;padding:6px 0;">{booking.get('booking_date', 'ASAP')}</td></tr>
             <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Time</td><td style="color:#1D1D1F;font-size:14px;text-align:right;padding:6px 0;">{booking.get('booking_time', 'Any')}</td></tr>
             <tr><td style="color:#86868B;font-size:13px;padding:6px 0;">Notes</td><td style="color:#1D1D1F;font-size:14px;text-align:right;padding:6px 0;">{booking.get('notes', 'None')}</td></tr>
-            <tr style="border-top:1px solid #D1D1D6;"><td style="color:#86868B;font-size:13px;padding:12px 0 6px;">Price</td><td style="color:#0066CC;font-size:18px;font-weight:700;text-align:right;padding:12px 0 6px;">${price:.2f} AUD</td></tr>
+
           </table>
         </div>
         <div style="text-align:center;">
