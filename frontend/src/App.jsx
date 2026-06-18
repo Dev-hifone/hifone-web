@@ -17,6 +17,7 @@ import AccessoriesPage from "./pages/AccessoriesPage";
 import MailInPage from "./pages/MailInPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import CareersPage from "./pages/CareersPage";
+import FAQPage from "./pages/FAQPage";
 
 // Scroll to top on every route change
 const ScrollToTop = () => {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/blog/:slug" element={<PL><BlogPage /></PL>} />
           <Route path="/accessories" element={<PL><AccessoriesPage /></PL>} />
           <Route path="/careers" element={<PL><CareersPage /></PL>} />
+          <Route path="/faq" element={<PL><FAQPage /></PL>} />
           <Route path="/:slug" element={<PL><DynamicSEOPage /></PL>} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

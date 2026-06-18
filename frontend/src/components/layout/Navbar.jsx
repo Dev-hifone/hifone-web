@@ -130,6 +130,32 @@ const ServicesMega = ({ onClose }) => (
   </div>
 );
 
+const COMPANY_LIST = [
+  { label: 'About Us', href: '/about', icon: 'ℹ️', desc: 'Our story & team' },
+  { label: 'FAQs', href: '/faq', icon: '❓', desc: 'Common questions answered' },
+  { label: 'Careers', href: '/careers', icon: '💼', desc: 'Join our team' },
+  { label: 'Contact', href: '/contact', icon: '📍', desc: 'Find us & get in touch' },
+];
+
+const CompanyMenu = ({ onClose }) => (
+  <div className="bg-white border-t-2 border-[#E31E24] shadow-2xl">
+    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-5">
+      <div className="grid grid-cols-4 gap-3 max-w-2xl">
+        {COMPANY_LIST.map(c => (
+          <Link key={c.label} to={c.href} onClick={onClose}
+            className="group flex items-start gap-3 p-3 rounded-xl hover:bg-red-50 transition-all border border-transparent hover:border-red-100">
+            <span className="text-xl shrink-0">{c.icon}</span>
+            <div>
+              <p className="font-bold text-sm text-[#111] group-hover:text-[#E31E24] transition-colors">{c.label}</p>
+              <p className="text-xs text-[#777] mt-0.5">{c.desc}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 export const Navbar = () => {
   const { brands } = useBrandsData();
   const [isOpen, setIsOpen] = useState(false);
@@ -146,10 +172,6 @@ export const Navbar = () => {
   const simpleLinks = [
     { name: 'Devices', href: '/devices' },
     { name: 'Accessories', href: '/accessories' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-    { name: 'Careers', href: '/careers' },
-
   ];
 
   // Mobile grouped brands
@@ -194,6 +216,12 @@ export const Navbar = () => {
                     {link.name}
                   </Link>
                 ))}
+                <div onMouseEnter={() => handleEnter('company')} onMouseLeave={handleLeave}>
+                  <button className={cn('flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full transition-all',
+                    activeMenu === 'company' ? 'text-white bg-[#E31E24]' : 'text-white/80 hover:text-white hover:bg-white/10')}>
+                    Company <ChevronDown className={cn('w-3.5 h-3.5 transition-transform', activeMenu === 'company' && 'rotate-180')} />
+                  </button>
+                </div>
               </div>
 
               {/* Desktop CTA */}
@@ -235,6 +263,13 @@ export const Navbar = () => {
               exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15 }}
               onMouseEnter={() => handleEnter('services')} onMouseLeave={handleLeave}>
               <ServicesMega onClose={() => setActiveMenu(null)} />
+            </motion.div>
+          )}
+          {activeMenu === 'company' && (
+            <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15 }}
+              onMouseEnter={() => handleEnter('company')} onMouseLeave={handleLeave}>
+              <CompanyMenu onClose={() => setActiveMenu(null)} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -306,6 +341,28 @@ export const Navbar = () => {
                     </Link>
                   ))}
                 </div>
+
+                {/* Company accordion */}
+                <button onClick={() => setOpenMobile(openMobile === 'company' ? null : 'company')}
+                  className="flex items-center justify-between w-full px-4 py-3 text-base font-medium text-white hover:bg-white/10 rounded-xl mx-2 transition-colors">
+                  <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-[#E31E24]" /> Company</span>
+                  <ChevronDown className={cn('w-4 h-4 transition-transform text-white/50', openMobile === 'company' && 'rotate-180')} />
+                </button>
+                <AnimatePresence>
+                  {openMobile === 'company' && (
+                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
+                      <div className="px-4 pb-2 grid grid-cols-2 gap-1">
+                        {COMPANY_LIST.map(item => (
+                          <Link key={item.label} to={item.href}
+                            className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-xl transition-colors">
+                            <span>{item.icon}</span> {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 <div className="px-4 pt-3 space-y-2">
                   <a href={`tel:${PHONE_NUMBER.replace(/\s/g, '')}`}

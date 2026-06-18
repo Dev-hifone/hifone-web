@@ -27,6 +27,7 @@ const footerLinks = {
   ],
   company: [
     { name: 'About Us', href: '/about' },
+    { name: 'FAQs', href: '/faq' },
     { name: 'Contact', href: '/contact' },
     { name: 'Book Repair', href: '/book' },
     { name: 'Blog', href: '/blog' },
