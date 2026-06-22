@@ -173,6 +173,29 @@ const FAQ_SECTIONS = [
       { q: 'Do I need to provide my passcode for repair?', a: 'Only if necessary for testing device functionality after repair.' },
     ]
   },
+  {
+    category: 'Accessories',
+    emoji: '🔌',
+    faqs: [
+      { q: 'Where can I buy phone accessories near me?', a: 'At Hi Fone, we stock a wide range of mobile accessories including chargers, cables, phone cases, tempered glass, and Bluetooth accessories.' },
+      { q: 'Where can I find mobile accessories near me?', a: 'Hi Fone offers quality accessories for iPhones, Samsung, Oppo, Google Pixel, and many other devices.' },
+      { q: 'Do you sell original and premium chargers near me?', a: 'Yes, we offer original and premium-quality chargers, cables, and fast charging accessories.' },
+      { q: 'Can I buy iPhone accessories near me?', a: 'Yes, we stock charging cables, MagSafe accessories, covers, camera lens protectors, and screen protectors for iPhones.' },
+      { q: 'Do you sell Samsung accessories near me?', a: 'Yes, we have chargers, cases, screen protectors, and cables for Samsung and other Android brands.' },
+      { q: 'Do you stock fast chargers and USB-C cables near me?', a: 'Yes, we carry fast chargers, USB-C cables, Lightning cables, and wireless charging accessories.' },
+      { q: 'Where can I buy Apple iPad accessories near me?', a: 'Hi Fone stocks iPad covers, chargers, tempered glass, keyboard cases, and stylus accessories.' },
+      { q: 'Do you install iPad screen protectors near me?', a: 'Yes, we provide professional fitting for iPad tempered glass and screen protectors.' },
+      { q: 'Do you sell iPad keyboard covers near me?', a: 'Yes, we stock practical keyboard cases for students, office use, and travel.' },
+      { q: 'Can I buy laptop chargers near me?', a: 'Yes, we stock laptop chargers for many major brands and can assist in finding the right one.' },
+      { q: 'What laptop accessories do you sell near me?', a: 'We sell cooling pads, laptop bags, keyboards, mice, USB hubs, adapters, SSDs, and external storage.' },
+      { q: 'Can I upgrade my laptop storage near me?', a: 'Yes, we offer SSD sales and installation to improve your laptop speed and performance.' },
+      { q: 'Do you sell Bluetooth earphones and speakers near me?', a: 'Yes, we stock wireless earphones, headphones, and Bluetooth speakers.' },
+      { q: 'Do you sell power banks near me?', a: 'Yes, we carry power banks in different capacities for everyday and travel use.' },
+      { q: 'Can your team help me choose the right accessory near me?', a: 'Absolutely. Bring your device into Hi Fone and our staff can recommend the best compatible option.' },
+      { q: 'Do your accessories come with warranty?', a: 'Yes, many of our products include warranty for added peace of mind.' },
+      { q: 'Can Hi Fone install tempered glass and accessories for me?', a: 'Yes, we provide in-store fitting and setup services.' },
+    ]
+  },
 ];
 
 function FAQItem({ q, a, index }) {

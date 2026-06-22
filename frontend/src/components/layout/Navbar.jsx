@@ -132,7 +132,6 @@ const ServicesMega = ({ onClose }) => (
 
 const COMPANY_LIST = [
   { label: 'About Us', href: '/about', icon: 'ℹ️', desc: 'Our story & team' },
-  { label: 'FAQs', href: '/faq', icon: '❓', desc: 'Common questions answered' },
   { label: 'Careers', href: '/careers', icon: '💼', desc: 'Join our team' },
   { label: 'Contact', href: '/contact', icon: '📍', desc: 'Find us & get in touch' },
 ];
@@ -172,6 +171,7 @@ export const Navbar = () => {
   const simpleLinks = [
     { name: 'Devices', href: '/devices' },
     { name: 'Accessories', href: '/accessories' },
+    { name: 'FAQs', href: '/faq' },
   ];
 
   // Mobile grouped brands
