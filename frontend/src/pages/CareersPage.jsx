@@ -4,7 +4,7 @@ import { ArrowLeft, MapPin, Clock, Mail, Phone, ArrowRight } from 'lucide-react'
 import { SEO } from '../components/SEO';
 
 const WHATSAPP = 'https://wa.me/61432977092?text=Hi%2C%20I%27m%20interested%20in%20applying%20for%20a%20position%20at%20HiFone.';
-const EMAIL = 'Info.hifone@gmail.com';
+const EMAIL = 'info@hifone.com.au';
 const PHONE = '0432 977 092';
 
 const POSITIONS = [

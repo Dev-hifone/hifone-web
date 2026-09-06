@@ -25,7 +25,7 @@ const KNOWN_SERVICE_SLUGS = [
   'charging-port-repair', 'camera-repair', 'speaker-mic-repair',
 ];
 
-const KNOWN_LOCATIONS = ['adelaide', 'kurralta-park'];
+const KNOWN_LOCATIONS = ['adelaide', 'kurralta-park', 'glenelg'];
 
 function parseSlug(slug) {
   if (!slug) return null;

@@ -64,7 +64,7 @@ useEffect(() => {
               <a href="tel:0432977092" className="flex items-center gap-3 text-sm text-white/50 hover:text-white transition-colors">
                 <Phone className="w-4 h-4 text-[#E31E24]" />0432 977 092
               </a>
-              <a href="mailto:Info.hifone@gmail.com" className="flex items-center gap-3 text-sm text-white/50 hover:text-white transition-colors">
+              <a href="mailto:info@hifone.com.au" className="flex items-center gap-3 text-sm text-white/50 hover:text-white transition-colors">
                 <Mail className="w-4 h-4 text-[#E31E24]" />info@hifone.com.au
               </a>
               <div className="flex items-center gap-3 text-sm text-white/50">

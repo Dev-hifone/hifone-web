@@ -40,4 +40,21 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://hifone.com.au/faq</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://hifone.com.au/careers</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <!--
+    The ~400 device+service+location SEO pages (e.g. iphone-14-screen-repair-glenelg)
+    are intentionally NOT hand-listed here. Run `python3 backend/generate_sitemap.py`
+    against the live database before each deploy; it queries real pricing data so
+    this file only ever lists pages that actually render, and overwrites this file
+    with the complete, current list.
+  -->
 </urlset>
