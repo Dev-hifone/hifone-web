@@ -61,7 +61,7 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "postbuild": "react-snap && node scripts/fix-duplicate-titles.js",
+    "postbuild": "node scripts/postbuild.js",
     "preview": "vite preview"
   },
   "reactSnap": {

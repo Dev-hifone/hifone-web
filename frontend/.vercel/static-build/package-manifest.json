@@ -1,7 +1,7 @@
 {
   "version": "20260304",
   "runtime": "node",
-  "framework": "create-react-app",
+  "framework": "vite",
   "runtimeVersion": {
     "resolved": "24"
   },
