@@ -25,7 +25,7 @@ const KNOWN_SERVICE_SLUGS = [
   'charging-port-repair', 'camera-repair', 'speaker-mic-repair',
 ];
 
-const KNOWN_LOCATIONS = ['adelaide', 'kurralta-park'];
+const KNOWN_LOCATIONS = ['adelaide', 'kurralta-park', 'glenelg'];
 
 function parseSlug(slug) {
   if (!slug) return null;
@@ -614,14 +614,22 @@ export default function DynamicSEOPage() {
         return;
       }
 
-      try {
-        const res = await seoApi.getPageData(parsed.deviceSlug, parsed.serviceSlug, parsed.location);
-        setPageData(res.data);
-      } catch (err) {
-        console.error('SEO page data fetch error:', err);
-        setError(true);
-      } finally {
-        setLoading(false);
+      const MAX_ATTEMPTS = 3;
+      for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+        try {
+          const res = await seoApi.getPageData(parsed.deviceSlug, parsed.serviceSlug, parsed.location);
+          setPageData(res.data);
+          setLoading(false);
+          return;
+        } catch (err) {
+          console.error(`SEO page data fetch error (attempt ${attempt}/${MAX_ATTEMPTS}):`, err);
+          if (attempt < MAX_ATTEMPTS) {
+            await new Promise((resolve) => setTimeout(resolve, 1500 * attempt));
+          } else {
+            setError(true);
+            setLoading(false);
+          }
+        }
       }
     };
 

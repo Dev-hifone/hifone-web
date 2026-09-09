@@ -62,7 +62,7 @@ export const SEO = ({
   location = 'Adelaide',
 }) => {
   const seoTitle = title
-    ? `${title} | HiFone Mobile Repairs Adelaide`
+    ? (/hifone/i.test(title) ? title : `${title} | HiFone Mobile Repairs Adelaide`)
     : DEFAULT_SEO.defaultTitle;
   const seoDescription = description || DEFAULT_SEO.defaultDescription;
   const seoImage = image || DEFAULT_SEO.defaultImage;

@@ -40,7 +40,7 @@ export default function ContactPage() {
   };
 
   const phone = settings?.phone || '0432 977 092';
-  const email = settings?.email || 'Info.hifone@gmail.com';
+  const email = settings?.email || 'info@hifone.com.au';
   const address = settings?.address || 'Shop 153 Anzac Hwy, Kurralta Park SA 5037';
   const hoursWeekday = settings?.hours_weekday || 'Monday – Saturday: 9am – 6pm';
   const hoursWeekend = settings?.hours_weekend || 'Sunday: Closed';

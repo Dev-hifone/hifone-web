@@ -1,4 +1,5 @@
 {
+  "framework": "vite",
   "outputDirectory": "build",
   "redirects": [
     { "source": "/services/iphone-repairs",           "destination": "/devices/iphone",                          "permanent": true },
@@ -9,7 +10,22 @@
     { "source": "/services/iphone-battery-replacement","destination": "/iphone-14-battery-replacement-adelaide", "permanent": true },
     { "source": "/services/iphone-charging-port-repairs","destination": "/iphone-14-charging-port-repair-adelaide","permanent": true },
     { "source": "/services/iphone-water-damage-repairs","destination": "/iphone-14-water-damage-repair-adelaide","permanent": true },
-    { "source": "/phone-repairs/north-adelaide",      "destination": "/services",                                "permanent": true }
+
+    { "source": "/phone-repairs/glenelg",              "destination": "/iphone-14-screen-repair-glenelg",         "permanent": true },
+    { "source": "/phone-repairs/kurralta-park",        "destination": "/iphone-14-screen-repair-kurralta-park",   "permanent": true },
+
+    { "source": "/phone-repairs/north-adelaide",       "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/goodwood",             "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/modbury",              "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/noarlunga",            "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/bowden",               "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/aldgate",              "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/kensington",           "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/marion",               "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/hackham",              "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/aldinga",              "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/henley-beach",         "destination": "/services",                                "permanent": true },
+    { "source": "/phone-repairs/:suburb",              "destination": "/services",                                "permanent": true }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }

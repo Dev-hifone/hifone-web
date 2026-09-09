@@ -61,6 +61,7 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
+    "postbuild": "node scripts/postbuild.js && node scripts/prerender-seo.mjs",
     "preview": "vite preview"
   },
   "reactSnap": {
@@ -72,6 +73,8 @@
     ],
     "puppeteerExecutablePath": "",
     "crawl": true,
+    "timeout": 90000,
+    "port": 45678,
     "inlineCss": false,
     "removeBlobs": true,
     "publicPath": "/",
@@ -87,7 +90,14 @@
       "/contact",
       "/about",
       "/blog",
-      "/accessories"
+      "/accessories",
+      "/faq",
+      "/careers",
+      "/iphone-14-screen-repair-adelaide",
+      "/iphone-14-screen-repair-kurralta-park",
+      "/iphone-14-screen-repair-glenelg",
+      "/iphone-14-battery-replacement-adelaide",
+      "/samsung-s24-screen-repair-adelaide"
     ]
   },
   "browserslist": {

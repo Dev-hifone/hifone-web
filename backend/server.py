@@ -29,10 +29,13 @@ GOOGLE_PLACES_API_KEY = os.environ.get('GOOGLE_PLACES_API_KEY', 'DUMMY_KEY_REPLA
 GOOGLE_PLACE_ID = os.environ.get('GOOGLE_PLACE_ID', 'ChIJxxxxxxxxxxxxxxx')
 
 # Resend Email configuration
-RESEND_API_KEY = os.environ.get('RESEND_API_KEY', 're_SW9cdohm_88ZoVPEcB5G4MXnKq4yZ4aWG')
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'info.hifone@gmail.com')
-resend.api_key = RESEND_API_KEY
+if RESEND_API_KEY:
+    resend.api_key = RESEND_API_KEY
+else:
+    logging.warning("RESEND_API_KEY not set — email sending will fail until it's configured.")
 
 # JWT configuration
 JWT_SECRET = os.environ.get('JWT_SECRET', 'hifone-admin-secret-key-2026')
@@ -1041,6 +1044,26 @@ LOCATION_DATA = {
         "description": "Located in the heart of Kurralta Park, we serve customers across the entire Adelaide metropolitan area including CBD, North Adelaide, Glenelg, and surrounding suburbs.",
         "areas_served": ["Adelaide CBD", "North Adelaide", "Glenelg", "Unley", "Norwood", "Prospect", "Kurralta Park", "Mile End", "Thebarton", "Torrensville"],
     },
+    # NOTE: only suburbs we can honestly write unique, specific content for belong here.
+    # This was previously a doorway-page risk (identical templated text swapped across
+    # ~20 suburbs, several 20-25km away). Don't re-add distant suburbs without real,
+    # suburb-specific facts (parking, transport, drive time) to write into the page.
+    "kurralta-park": {
+        "name": "Kurralta Park",
+        "full_name": "Kurralta Park, Adelaide",
+        "state": "SA",
+        "postcode": "5037",
+        "description": "Our workshop is right in Kurralta Park, on the Glenelg tram corridor about 4km southwest of the Adelaide CBD, close to South Road and Anzac Highway. Kurralta Central Shopping Centre is a couple of hundred metres away, with the Glandore tram stop and several Anzac Highway bus routes nearby.",
+        "areas_served": ["Kurralta Park", "Glandore", "Plympton", "Ashford", "Everard Park", "Keswick", "Netley", "Marleston"],
+    },
+    "glenelg": {
+        "name": "Glenelg",
+        "full_name": "Glenelg, Adelaide",
+        "state": "SA",
+        "postcode": "5045",
+        "description": "We're a short trip from Glenelg — straight up Anzac Highway or one stop on the Glenelg tram line to our Kurralta Park workshop, about 10 minutes away by car or tram. No need to find parking near the beach; drop your device with us on the way into the city.",
+        "areas_served": ["Glenelg", "Glenelg South", "Glenelg East", "Glenelg North", "Novar Gardens", "Camden Park"],
+    },
 }
 
 # Service-specific details for SEO pages
@@ -1197,7 +1220,7 @@ async def get_seo_page_data(device_slug: str, service_slug: str, location: str =
             {"device_id": rd["id"], "service_id": service_id, "is_active": True}, {"_id": 0}
         )
         if rd_pricing:
-            dev_slug = DEVICE_ID_TO_SLUG.get(rd["id"], "")
+            dev_slug = DEVICE_ID_TO_SLUG.get(rd["id"]) or rd.get("slug", "")
             related_devices.append({
                 "device_name": rd["name"],
                 "device_slug": dev_slug,
@@ -1237,17 +1260,22 @@ async def get_all_seo_slugs():
         device_pricing = await db.pricing.find(
             {"device_id": device_id, "is_active": True}, {"_id": 0, "service_id": 1}
         ).to_list(100)
-        
+
         for pp in device_pricing:
             service_slug = SERVICE_ID_TO_SLUG.get(pp["service_id"])
-            if service_slug:
+            if not service_slug:
+                continue
+            # Generate one page per real location, not just "adelaide".
+            # See LOCATION_DATA note: only add locations here once they have
+            # genuine, unique content — don't turn this back into doorway pages.
+            for location_slug in LOCATION_DATA.keys():
                 slugs.append({
-                    "slug": f"{device_slug}-{service_slug}-adelaide",
+                    "slug": f"{device_slug}-{service_slug}-{location_slug}",
                     "device_slug": device_slug,
                     "service_slug": service_slug,
-                    "location": "adelaide",
+                    "location": location_slug,
                 })
-    
+
     return {"slugs": slugs, "total": len(slugs)}
 
 
