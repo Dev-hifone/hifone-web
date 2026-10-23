@@ -217,7 +217,7 @@ function HeroSection({ device, service, pricing, location, slug }) {
                     <Star key={i} className="w-4 h-4 text-[#FF9500] fill-[#FF9500]" />
                   ))}
                 </div>
-                <span className="text-sm text-[#1D1D1F] font-medium">5.0</span>
+                <span className="text-sm text-[#1D1D1F] font-medium">4.9</span>
                 <span className="text-sm text-[#86868B]">on Google</span>
               </div>
             </div>
@@ -287,9 +287,9 @@ function WhyChooseUsSection({ deviceName }) {
   const reasons = [
     { icon: Clock, title: 'Same-Day Repair', desc: 'Most repairs completed within 30-60 minutes while you wait. No need to be without your device for days.' },
     { icon: Shield, title: 'Warranty Included', desc: 'Every repair comes with our comprehensive warranty. If anything goes wrong, we fix it for free.' },
-    { icon: Wrench, title: 'Certified Technicians', desc: 'Our experienced team specialises in device repairs with thousands of successful fixes.' },
+    { icon: Wrench, title: 'Experienced Technicians', desc: 'Our experienced team specialises in device repairs with thousands of successful fixes.' },
     { icon: CheckCircle, title: 'No Fix, No Pay', desc: "If we can't repair your device, you don't pay. Free diagnosis with every repair enquiry." },
-    { icon: Star, title: '5-Star Rated', desc: 'Rated 5.0 on Google Reviews. Our customers trust us with their devices and recommend us.' },
+    { icon: Star, title: 'Top Rated', desc: 'Rated 4.9 on Google Reviews. Our customers trust us with their devices and recommend us.' },
     { icon: Smartphone, title: 'Premium Parts', desc: 'We only use high-quality replacement parts that meet or exceed OEM specifications.' },
   ];
 

@@ -2,6 +2,8 @@
   "framework": "vite",
   "outputDirectory": "build",
   "redirects": [
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "hifone.com.au" }], "destination": "https://www.hifone.com.au/$1", "permanent": true },
+
     { "source": "/services/iphone-repairs",           "destination": "/devices/iphone",                          "permanent": true },
     { "source": "/services/android-phone-repairs",    "destination": "/devices/samsung",                         "permanent": true },
     { "source": "/services/samsung-repairs",          "destination": "/devices/samsung",                         "permanent": true },

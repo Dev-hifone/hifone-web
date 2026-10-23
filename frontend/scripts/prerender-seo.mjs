@@ -30,7 +30,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const BUILD_DIR = join(__dirname, '..', 'build');
 const BACKEND_URL = (process.env.PRERENDER_BACKEND_URL || 'https://hifone-web.onrender.com').replace(/\/$/, '');
-const SITE_URL = (process.env.VITE_SITE_URL || 'https://hifone.com.au').replace(/\/$/, '');
+const SITE_URL = (process.env.VITE_SITE_URL || 'https://www.hifone.com.au').replace(/\/$/, '');
 const API = `${BACKEND_URL}/api`;
 const CONCURRENCY = 8;
 

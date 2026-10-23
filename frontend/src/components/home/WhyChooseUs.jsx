@@ -361,8 +361,8 @@ export const WhyChooseUs = () => {
               className="relative"
             >
               <img
-                src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=700&q=80"
-                alt="Mail-in phone repair Australia Post"
+                src="/store/shop_kiosk_main.jpg"
+                alt="HiFone repair kiosk at Kurralta Park - mail-in repairs via Australia Post"
                 className="w-full rounded-2xl object-cover aspect-[4/3]"
               />
               {/* Australia Post badge overlay */}

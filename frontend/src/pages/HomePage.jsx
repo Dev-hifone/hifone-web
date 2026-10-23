@@ -6,6 +6,7 @@ import { Testimonials } from '../components/home/Testimonials';
 import { FinalCTA } from '../components/home/FinalCTA';
 import { FAQ } from '../components/home/FAQ';
 import { SEO } from '../components/SEO';
+import { homeFaqs } from '../data/faqs';
 import { settingsApi, blogApi } from '../lib/api';
 import { MapPin, Phone, Clock, Car, ArrowRight, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -130,9 +131,9 @@ const StoreLocation = ({ settings }) => {
 const BlogPreview = () => {
   const [blogs, setBlogs] = useState([]);
   const PLACEHOLDERS = [
-    { id: '1', title: 'How to Protect Your Phone Screen', slug: 'protect-phone-screen', excerpt: 'Best practices to keep your screen safe from cracks.', created_at: new Date().toISOString(), image_url: 'https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=400&q=80' },
-    { id: '2', title: '5 Signs Your Battery Needs Replacing', slug: 'battery-replacement-signs', excerpt: 'Is your phone dying fast? These signs say yes.', created_at: new Date().toISOString(), image_url: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&q=80' },
-    { id: '3', title: 'What to Do After Water Damage', slug: 'water-damage-guide', excerpt: 'Quick steps to save your phone after a swim.', created_at: new Date().toISOString(), image_url: 'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=400&q=80' },
+    { id: '1', title: 'How to Protect Your Phone Screen', slug: 'protect-phone-screen', excerpt: 'Best practices to keep your screen safe from cracks.', created_at: '2026-08-12T09:00:00.000Z', image_url: 'https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=400&q=80' },
+    { id: '2', title: '5 Signs Your Battery Needs Replacing', slug: 'battery-replacement-signs', excerpt: 'Is your phone dying fast? These signs say yes.', created_at: '2026-08-28T09:00:00.000Z', image_url: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&q=80' },
+    { id: '3', title: 'What to Do After Water Damage', slug: 'water-damage-guide', excerpt: 'Quick steps to save your phone after a swim.', created_at: '2026-09-09T09:00:00.000Z', image_url: 'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=400&q=80' },
   ];
 
   useEffect(() => {
@@ -196,7 +197,7 @@ export default function HomePage() {
         phone: '0432 977 092',
         hours_weekday: 'Monday – Saturday: 9am – 6pm',
         hours_weekend: 'Sunday: Closed',
-        google_maps_embed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3271.2!2d138.5722!3d-34.9456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sKurralta+Park!5e0!3m2!1sen!2sau!4v1',
+        google_maps_embed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3271.2!2d138.5722!3d-34.9456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ab0ced13e4a6d25%3A0xef07141d011d544c!2sHiFone!5e0!3m2!1sen!2sau!4v1',
       });
     });
   }, []);
@@ -205,8 +206,8 @@ export default function HomePage() {
     <div data-testid="home-page" className="pb-16 lg:pb-0">
       <SEO
         title="Best Mobile Phone Repairs in Kurralta Park, Adelaide | HiFone"
-        description="HiFone — Kurralta Park's fastest phone repair shop. iPhone, Samsung, iPad, Laptop repairs. Same-day service, 3–6 month warranty, no fix no fee."
-        keywords="phone repair adelaide, iphone repair kurralta park, samsung repair adelaide, screen repair, battery replacement, laptop repair adelaide"
+        description="HiFone — Kurralta Park's fastest phone repair shop. iPhone, Samsung, iPad, Laptop repairs. Same-day service, 6-month warranty, no fix no fee."
+        faqs={homeFaqs}
       />
       <Hero />
       <ServicesGrid />

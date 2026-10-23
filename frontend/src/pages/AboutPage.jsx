@@ -48,14 +48,14 @@ export default function AboutPage() {
                 Kurralta Park's Most Trusted Phone Repair Store
               </h1>
               <p className="text-lg text-white/60 mb-8 leading-relaxed">
-                Serving Adelaide since 2019 — we've repaired thousands of devices with honest pricing, same-day service, and a 3–6 month warranty on every repair.
+                Serving Adelaide since 2019 — we've repaired thousands of devices with honest pricing, same-day service, and a 6-month warranty on every repair.
               </p>
 
               {/* Trust stats row */}
               <div className="grid grid-cols-3 gap-4 mb-8">
                 {[
                   { value: '700+', label: 'Happy Customers' },
-                  { value: '5.0 ⭐', label: 'Google Rating' },
+                  { value: '4.9 ⭐', label: 'Google Rating' },
                   { value: '5+ Yrs', label: 'In Business' },
                 ].map((stat) => (
                   <div key={stat.label} className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center">
@@ -75,7 +75,7 @@ export default function AboutPage() {
                   ))}
                 </div>
                 <div>
-                  <p className="text-white text-sm font-bold">5.0 on Google</p>
+                  <p className="text-white text-sm font-bold">4.9 on Google</p>
                   <p className="text-white/50 text-xs">700+ verified reviews</p>
                 </div>
                 <a href="https://g.page/r/CVxRDB1RTAfvEAo" target="_blank" rel="noopener noreferrer"
