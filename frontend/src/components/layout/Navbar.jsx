@@ -82,7 +82,7 @@ const RepairMega = ({ brands, onClose }) => {
             </Link>
             <div className="bg-[#F8F8F8] rounded-xl p-3">
               <p className="text-xs font-bold text-[#111] mb-2">⚡ Quick Facts</p>
-              {['Same-day service', 'No fix, no pay', '3–6 month warranty'].map(f => (
+              {['Same-day service', 'No fix, no pay', '6-month warranty'].map(f => (
                 <p key={f} className="text-xs text-[#555] py-0.5">✓ {f}</p>
               ))}
             </div>

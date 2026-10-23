@@ -1,5 +1,12 @@
 import { motion } from 'framer-motion';
 
+// !!! ACTION REQUIRED BEFORE GO-LIVE - DO NOT SHIP AS-IS.
+// The entries below are PLACEHOLDERS. Publishing invented reviews breaches the
+// Australian Consumer Law and Google review policy. HiFone has 700+ genuine reviews -
+// replace each with a REAL one (name = actual Google display name, text = VERBATIM,
+// rating = actual stars) and set REVIEWS_VERIFIED = true.
+const REVIEWS_VERIFIED = false;
+
 const REVIEWS = [
   { name: 'Sarah M.', location: 'Adelaide CBD', rating: 5, text: 'Fixed my iPhone 14 Pro screen in under an hour. Looks brand new!' },
   { name: 'James L.', location: 'Glenelg', rating: 5, text: 'Samsung water damage — they saved everything. Miracle workers!' },
@@ -33,8 +40,8 @@ export const Testimonials = () => {
           <h2 className="text-h2 mb-4">What Customers Say</h2>
           <div className="flex items-center justify-center gap-3">
             <Stars />
-            <span className="font-bold text-[#111111]">5.0</span>
-            <span className="text-[#777777] text-sm">· 150+ Google Reviews</span>
+            <span className="font-bold text-[#111111]">4.9</span>
+            <span className="text-[#777777] text-sm">· 700+ Google Reviews</span>
           </div>
         </motion.div>
 

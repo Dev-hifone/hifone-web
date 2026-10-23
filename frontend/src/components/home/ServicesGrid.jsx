@@ -39,23 +39,17 @@ const CATEGORY_CONFIG = [
   },
 ];
 
-const BRANDS = [
-  { name: 'Apple',   logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' },
-  { name: 'Samsung', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b4/Samsung_wordmark.svg' },
-  { name: 'Google',  logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' },
-  { name: 'Huawei',  logo: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Huawei_Standard_logo.svg' },
-  { name: 'Oppo',    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/64/OPPO_LOGO_2019.svg' },
-  { name: 'Dell',    logo: 'https://upload.wikimedia.org/wikipedia/commons/4/48/Dell_Logo.svg' },
-  { name: 'HP',      logo: 'https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg' },
-  { name: 'Lenovo',  logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/Lenovo_logo_2015.svg' },
-  { name: 'Asus',    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg' },
-  { name: 'Xiaomi',  logo: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg' },
-  { name: 'OnePlus', logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/OnePlus_logo.svg' },
-  { name: 'Nokia',   logo: 'https://upload.wikimedia.org/wikipedia/commons/0/02/Nokia_wordmark.svg' },
-];
+const BRANDS = ['Apple', 'Samsung', 'Google', 'Huawei', 'Oppo', 'Dell', 'HP', 'Lenovo', 'Asus', 'Xiaomi', 'OnePlus', 'Nokia'];
+
+const BrandItem = ({ name, hidden = false }) => (
+  <div className="flex items-center justify-center shrink-0 px-4" aria-hidden={hidden || undefined}>
+    <span className="font-display font-semibold text-lg text-[#999999] hover:text-[#111111] transition-colors duration-300 whitespace-nowrap">
+      {name}
+    </span>
+  </div>
+);
 
 const BrandsMarquee = () => {
-  const doubled = [...BRANDS, ...BRANDS];
   return (
     <div className="py-12 bg-[#F8F8F8] overflow-hidden border-y border-gray-100">
       <div className="text-center mb-6">
@@ -65,17 +59,10 @@ const BrandsMarquee = () => {
       <div className="relative">
         <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#F8F8F8] to-transparent z-10" />
         <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#F8F8F8] to-transparent z-10" />
-        <div className="flex animate-marquee gap-10 items-center">
-          {doubled.map((brand, i) => (
-            <div key={`${brand.name}-${i}`} className="flex flex-col items-center gap-2 shrink-0 group">
-              <div className="w-20 h-12 flex items-center justify-center">
-                <img src={brand.logo} alt={brand.name}
-                  className="max-h-10 max-w-[80px] w-auto object-contain grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-100 transition-all duration-300"
-                  onError={(e) => { e.target.style.display = 'none'; }} />
-              </div>
-              <span className="text-xs text-[#999999] font-medium">{brand.name}</span>
-            </div>
-          ))}
+        <div className="flex animate-marquee gap-6 items-center">
+          {BRANDS.map((name) => <BrandItem key={name} name={name} />)}
+          {/* Duplicate set for the seamless loop only; hidden from AT & crawlers. */}
+          {BRANDS.map((name) => <BrandItem key={`dup-${name}`} name={name} hidden />)}
         </div>
       </div>
     </div>
@@ -85,9 +72,14 @@ const BrandsMarquee = () => {
 export const ServicesGrid = () => {
   const { brands } = useBrandsData();
 
+  // Entries that are categories/placeholders in the DB, not real phone brands.
+  const NON_BRANDS = new Set(['Drone', 'Other', 'Others', 'Generic']);
+
   // Map brands to categories
   const getBrandsForCategory = (categoryKey) => {
-    return brands.filter(b => b.category === categoryKey).slice(0, 5);
+    return brands
+      .filter(b => b.category === categoryKey && !NON_BRANDS.has(b.brand))
+      .slice(0, 5);
   };
 
   return (

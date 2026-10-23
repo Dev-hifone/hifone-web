@@ -34,7 +34,7 @@ const HOW_IT_WORKS = [
 ];
 
 const TRUST_ITEMS = [
-  { icon: Shield, text: '3–6 Month Warranty' },
+  { icon: Shield, text: '6-Month Warranty' },
   { icon: Clock, text: '48hr Turnaround' },
   { icon: Package, text: 'Tracked Return Shipping' },
 ];

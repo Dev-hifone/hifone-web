@@ -8,16 +8,16 @@ const WHATSAPP = 'https://wa.me/61432977092';
 const trustBadges = [
   { icon: '⚡', text: 'Same-Day Repairs' },
   { icon: '🅿️', text: 'Free Parking' },
-  { icon: '🛡️', text: '3–6 Month Warranty' },
+  { icon: '🛡️', text: '6-Month Warranty' },
   { icon: '✅', text: 'No Fix, No Fee' },
   { icon: '🏪', text: 'Kmart — 1 Min Walk' },
 ];
 
 const trustSignals = [
   { icon: '⏱️', title: '30–60 Minutes', sub: 'Most repairs done' },
-  { icon: '⭐', title: '700+ Reviews', sub: '5.0 Google Rating' },
+  { icon: '⭐', title: '700+ Reviews', sub: '4.9 Google Rating' },
   { icon: '💰', title: 'Upfront Pricing', sub: 'No hidden fees' },
-  { icon: '🔧', title: 'Certified Techs', sub: '5+ years experience' },
+  { icon: '🔧', title: 'Experienced Techs', sub: 'Thousands of repairs' },
 ];
 
 // Hero slider slides
@@ -48,7 +48,7 @@ const SLIDES = [
     sub: 'Back glass, screens, batteries, water damage — all devices, same day.',
     image: '/hero/after_backglass.jpg',
     imageFit: 'object-cover object-center',
-    badge: { label: '3–6 Month Warranty', color: 'bg-[#111111]' },
+    badge: { label: '6-Month Warranty', color: 'bg-[#111111]' },
   },
 ];
 
